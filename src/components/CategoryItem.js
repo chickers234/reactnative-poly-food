@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     margin: width * 0.01,
     backgroundColor: colors.lightgray,
     width: width * 0.23,
-    height: 80,
+    height: height * 0.1,
     borderRadius: 5,
   },
   icon: {

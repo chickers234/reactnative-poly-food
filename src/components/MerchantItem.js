@@ -12,6 +12,7 @@ export default function MerchantItem({
   rating,
   long,
   lat,
+  dis,
 }) {
   return (
     <View style={styles.container}>
@@ -35,6 +36,11 @@ export default function MerchantItem({
             style={styles.icon}
           />
           <Text style={styles.subtitle}>{rating}</Text>
+          <Image
+            source={require('../assets/icons/distance.png')}
+            style={[styles.icon, {marginLeft: 100}]}
+          />
+          <Text style={styles.subtitle}>{dis} km</Text>
         </View>
         <Text
           style={[

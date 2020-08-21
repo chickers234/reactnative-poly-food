@@ -1,22 +1,21 @@
 import React from 'react';
-import {Image, StyleSheet, StatusBar, View} from 'react-native';
+import {Image, StyleSheet, Dimensions, StatusBar, View} from 'react-native';
+
+export const {width, height} = Dimensions.get('window');
 
 export default function Slider({image}) {
   return (
-    <View style={styles.child}>
+    <View>
       <StatusBar
         translucent={true}
         backgroundColor={'transparent'}
         barStyle="light-content"
       />
-      <Image style={{height: 210, width: '100%'}} source={image} />
+      <Image
+        style={{height: height * 0.25, width: '100%'}}
+        source={image}
+        resizeMode="cover"
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  child: {
-    height: 210,
-    width: '100%',
-  },
-});
