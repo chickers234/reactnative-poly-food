@@ -13,12 +13,12 @@ export const {width, height} = Dimensions.get('window');
 export default function MenuScreen() {
   //const id = 'CH02';
   const [menu, setMenu] = useState([]);
-  const {merchant} = useContext(StoreContext);
+  const {merchantId} = useContext(StoreContext);
 
   useEffect(() => {
     let MenuList = [];
     const onValueChange = database()
-      .ref(`/Menu/${merchant.merchantId}`)
+      .ref(`/Menu/${merchantId.merchantId}`)
       .on('value', (snapshot) => {
         snapshot.forEach((child) => {
           MenuList.push({
@@ -34,9 +34,9 @@ export default function MenuScreen() {
     // Stop listening for updates when no longer required
     return () =>
       database()
-        .ref(`/Menu/${merchant.merchantId}`)
+        .ref(`/Menu/${merchantId.merchantId}`)
         .off('value', onValueChange);
-  }, [merchant.merchantId]);
+  }, [merchantId.merchantId]);
 
   return (
     <View style={styles.container}>

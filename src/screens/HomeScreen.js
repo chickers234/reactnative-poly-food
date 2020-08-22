@@ -28,6 +28,8 @@ const _renderItemMerchant = ({item}) => (
     name={item.name}
     address={item.address}
     rating={item.rating}
+    lat={item.lat}
+    long={item.long}
     dis={item.dis}
     goTo="DetailMerchantScreen"
   />
@@ -39,7 +41,7 @@ export default function HomeScreen() {
   const [latitude, setLat] = useState('');
   const [longitude, setLong] = useState('');
   const [data, setData] = useState([]);
-  const {lat, long} = useContext(StoreContext);
+  const {userLat, userLong} = useContext(StoreContext);
   const numColumns = 4;
 
   useEffect(() => {
@@ -50,15 +52,15 @@ export default function HomeScreen() {
       .then((location) => {
         setLat(location.latitude);
         setLong(location.longitude);
-        lat.setLatitude(location.latitude);
-        long.setLongitude(location.longitude);
+        userLat.setUserLat(location.latitude);
+        userLong.setUserLong(location.longitude);
         //console.log('lat: ' + latitude + ' - long: ' + longitude);
       })
       .catch((error) => {
         const {code, message} = error;
         console.warn(code, message);
       });
-  }, [latitude, longitude]);
+  }, [userLat, userLong]);
 
   useEffect(() => {
     let MerchantList = [];

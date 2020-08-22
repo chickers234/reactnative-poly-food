@@ -1,12 +1,12 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React, {useContext} from 'react';
+import React from 'react';
 import {
-  Image,
   Dimensions,
+  Image,
   ImageBackground,
+  Pressable,
   StyleSheet,
   Text,
-  Pressable,
   View,
 } from 'react-native';
 import colors from '../config/color';
@@ -14,7 +14,6 @@ import CommentScreen from '../screens/DetailMerchant/CommentScreen';
 import MapScreen from '../screens/DetailMerchant/MapScreen';
 import MenuScreen from '../screens/DetailMerchant/MenuScreen';
 import common from '../themes/common';
-import {StoreContext} from '../utils/store';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -22,8 +21,6 @@ export const {width, height} = Dimensions.get('window');
 
 export default function DetailMerchantScreen({route, navigation}) {
   const {id, image, name, address} = route.params;
-  const {merchant} = useContext(StoreContext);
-  merchant.setMerchantId(id);
 
   return (
     <View style={styles.container}>
@@ -96,7 +93,7 @@ const styles = StyleSheet.create({
   back: {
     alignItems: 'center',
     position: 'absolute',
-    top: 35,
+    top: 40,
     paddingLeft: 10,
     flexDirection: 'row',
   },

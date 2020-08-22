@@ -1,16 +1,17 @@
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useContext} from 'react';
 import {
   Dimensions,
+  Image,
+  Pressable,
   StyleSheet,
   Text,
-  Pressable,
-  Image,
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import colors from '../config/color';
 import common from '../themes/common';
-import {useNavigation} from '@react-navigation/native';
+import {StoreContext} from '../utils/store';
 
 export const {width, height} = Dimensions.get('window');
 
@@ -20,15 +21,30 @@ export default function MerchantItem({
   name,
   address,
   rating,
+  lat,
+  long,
   dis,
   goTo,
 }) {
   const navigation = useNavigation();
+  const {merchantId, merchantLat, merchantLong} = useContext(StoreContext);
+
   return (
     <Pressable
-      onPress={() =>
-        navigation.navigate(goTo, {id, image, name, address, rating})
-      }>
+      onPress={() => [
+        merchantId.setMerchantId(id),
+        merchantLat.setMerchantLat(lat),
+        merchantLong.setMerchantLong(long),
+        navigation.navigate(goTo, {
+          id,
+          image,
+          name,
+          address,
+          rating,
+          lat,
+          long,
+        }),
+      ]}>
       <View style={styles.container}>
         <FastImage
           source={{
