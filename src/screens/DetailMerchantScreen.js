@@ -1,10 +1,12 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React from 'react';
+import React, {useContext} from 'react';
 import {
+  Image,
   Dimensions,
   ImageBackground,
   StyleSheet,
   Text,
+  Pressable,
   View,
 } from 'react-native';
 import colors from '../config/color';
@@ -12,13 +14,17 @@ import CommentScreen from '../screens/DetailMerchant/CommentScreen';
 import MapScreen from '../screens/DetailMerchant/MapScreen';
 import MenuScreen from '../screens/DetailMerchant/MenuScreen';
 import common from '../themes/common';
+import {StoreContext} from '../utils/store';
 
 const Tab = createMaterialTopTabNavigator();
 
 export const {width, height} = Dimensions.get('window');
 
-export default function DetailMerchantScreen({route}) {
+export default function DetailMerchantScreen({route, navigation}) {
   const {id, image, name, address} = route.params;
+  const {merchant} = useContext(StoreContext);
+  merchant.setMerchantId(id);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -35,7 +41,18 @@ export default function DetailMerchantScreen({route}) {
             {address}
           </Text>
         </View>
+
+        <Pressable
+          style={styles.back}
+          onPress={() => navigation.navigate('Main')}>
+          <Image
+            source={require('../assets/icons/back.png')}
+            style={styles.icon}
+          />
+          <Text style={[common.title, {color: colors.white}]}>Back</Text>
+        </Pressable>
       </View>
+
       <Tab.Navigator
         tabBarOptions={{
           labelStyle: {
@@ -75,5 +92,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.black,
     position: 'absolute',
     opacity: 0.5,
+  },
+  back: {
+    alignItems: 'center',
+    position: 'absolute',
+    top: 35,
+    paddingLeft: 10,
+    flexDirection: 'row',
+  },
+  icon: {
+    height: 16,
+    width: 16,
+    marginRight: 5,
   },
 });

@@ -1,7 +1,8 @@
 import database from '@react-native-firebase/database';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import MenuItem from '../../components/MenuItem';
+import {StoreContext} from '../../utils/store';
 
 const _renderItem = ({item}) => (
   <MenuItem image={item.image} name={item.name} price={item.price} />
@@ -10,13 +11,14 @@ const _renderItem = ({item}) => (
 export const {width, height} = Dimensions.get('window');
 
 export default function MenuScreen() {
-  const id = 'CH02';
+  //const id = 'CH02';
   const [menu, setMenu] = useState([]);
+  const {merchant} = useContext(StoreContext);
 
   useEffect(() => {
     let MenuList = [];
     const onValueChange = database()
-      .ref(`/Menu/${id}`)
+      .ref(`/Menu/${merchant.merchantId}`)
       .on('value', (snapshot) => {
         snapshot.forEach((child) => {
           MenuList.push({
@@ -30,8 +32,12 @@ export default function MenuScreen() {
       });
 
     // Stop listening for updates when no longer required
-    return () => database().ref(`/Menu/${id}`).off('value', onValueChange);
-  }, []);
+    return () =>
+      database()
+        .ref(`/Menu/${merchant.merchantId}`)
+        .off('value', onValueChange);
+  }, [merchant.merchantId]);
+
   return (
     <View style={styles.container}>
       <FlatList

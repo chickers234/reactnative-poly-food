@@ -1,14 +1,13 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Foundation from 'react-native-vector-icons/Foundation';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Foundation from 'react-native-vector-icons/Foundation';
 import BillScreen from './BillScreen';
 import CartScreen from './CartScreen';
 import HomeScreen from './HomeScreen';
 import ProfileScreen from './ProfileScreen';
-import colors from '../config/color';
 
 const Tab = createBottomTabNavigator();
 

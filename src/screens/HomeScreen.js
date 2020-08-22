@@ -1,6 +1,6 @@
 import database from '@react-native-firebase/database';
 import {getDistance} from 'geolib';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -15,6 +15,7 @@ import MerchantItem from '../components/MerchantItem';
 import {SwiperList} from '../components/Swiper';
 import CategoryList from '../data/CategoryList';
 import * as helper from '../utils/helper';
+import {StoreContext} from '../utils/store';
 
 const _renderItemCategoty = ({item}) => (
   <CategoryItem icon={item.icon} title={item.title} />
@@ -35,9 +36,10 @@ const _renderItemMerchant = ({item}) => (
 export const {width, height} = Dimensions.get('window');
 
 export default function HomeScreen() {
-  const [lat, setLat] = useState('');
-  const [long, setLong] = useState('');
+  const [latitude, setLat] = useState('');
+  const [longitude, setLong] = useState('');
   const [data, setData] = useState([]);
+  const {lat, long} = useContext(StoreContext);
   const numColumns = 4;
 
   useEffect(() => {
@@ -48,13 +50,15 @@ export default function HomeScreen() {
       .then((location) => {
         setLat(location.latitude);
         setLong(location.longitude);
-        console.log('lat: ' + lat + ' - long: ' + long);
+        lat.setLatitude(location.latitude);
+        long.setLongitude(location.longitude);
+        //console.log('lat: ' + latitude + ' - long: ' + longitude);
       })
       .catch((error) => {
         const {code, message} = error;
         console.warn(code, message);
       });
-  }, [lat, long]);
+  }, [latitude, longitude]);
 
   useEffect(() => {
     let MerchantList = [];
@@ -63,7 +67,7 @@ export default function HomeScreen() {
       .on('value', (snapshot) => {
         snapshot.forEach((child) => {
           let dis = getDistance(
-            {latitude: lat, longitude: long},
+            {latitude: latitude, longitude: longitude},
             {latitude: child.val().latitude, longitude: child.val().longitude},
           );
           if (dis / 1000 < 5) {
@@ -84,7 +88,7 @@ export default function HomeScreen() {
 
     // Stop listening for updates when no longer required
     return () => database().ref('/CuaHang').off('value', onValueChange);
-  }, [data, lat, long]);
+  }, [data, latitude, longitude]);
 
   return (
     <View style={styles.container}>
