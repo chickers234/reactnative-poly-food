@@ -10,10 +10,9 @@ import {
   View,
 } from 'react-native';
 import GetLocation from 'react-native-get-location';
-import SwiperFlatList from 'react-native-swiper-flatlist';
 import CategoryItem from '../components/CategoryItem';
 import MerchantItem from '../components/MerchantItem';
-import Slider from '../components/Slider';
+import {SwiperList} from '../components/Swiper';
 import CategoryList from '../data/CategoryList';
 import * as helper from '../utils/helper';
 
@@ -23,11 +22,13 @@ const _renderItemCategoty = ({item}) => (
 
 const _renderItemMerchant = ({item}) => (
   <MerchantItem
+    id={item.id}
     image={item.image}
     name={item.name}
     address={item.address}
     rating={item.rating}
     dis={item.dis}
+    goTo="DetailMerchantScreen"
   />
 );
 
@@ -47,6 +48,7 @@ export default function HomeScreen() {
       .then((location) => {
         setLat(location.latitude);
         setLong(location.longitude);
+        console.log('lat: ' + lat + ' - long: ' + long);
       })
       .catch((error) => {
         const {code, message} = error;
@@ -56,54 +58,38 @@ export default function HomeScreen() {
 
   useEffect(() => {
     let MerchantList = [];
-    database()
+    const onValueChange = database()
       .ref('/CuaHang')
-      .once('value', (snapshot) => {
+      .on('value', (snapshot) => {
         snapshot.forEach((child) => {
           let dis = getDistance(
             {latitude: lat, longitude: long},
             {latitude: child.val().latitude, longitude: child.val().longitude},
           );
           if (dis / 1000 < 5) {
-            if (child.val().diachi.length > 30) {
-              MerchantList.push({
-                image: child.val().hinhanh,
-                name: child.val().tencuahang,
-                address: child.val().diachi.substring(0, 30) + ' ...',
-                rating: child.val().rating,
-                lat: child.val().latitude,
-                long: child.val().longitude,
-                dis: helper.getDistance(dis),
-              });
-            }
+            MerchantList.push({
+              id: child.val().macuahang,
+              image: child.val().hinhanh,
+              name: child.val().tencuahang,
+              address: child.val().diachi,
+              rating: child.val().rating,
+              lat: child.val().latitude,
+              long: child.val().longitude,
+              dis: helper.getDistance(dis),
+            });
           }
         });
-        setData(MerchantList);
+        setData(helper.sortByDistance(MerchantList));
       });
+
+    // Stop listening for updates when no longer required
+    return () => database().ref('/CuaHang').off('value', onValueChange);
   }, [data, lat, long]);
 
   return (
     <View style={styles.container}>
       <View style={{height: height * 0.25}}>
-        <SwiperFlatList
-          autoplay
-          autoplayDelay={3}
-          autoplayLoop
-          index={0}
-          showPagination>
-          <View style={styles.child}>
-            <Slider image={require('../assets/images/banner01.jpg')} />
-          </View>
-          <View style={styles.child}>
-            <Slider image={require('../assets/images/banner02.jpg')} />
-          </View>
-          <View style={styles.child}>
-            <Slider image={require('../assets/images/banner03.jpg')} />
-          </View>
-          <View style={styles.child}>
-            <Slider image={require('../assets/images/banner04.jpg')} />
-          </View>
-        </SwiperFlatList>
+        <SwiperList />
       </View>
       <View style={{marginTop: width * 0.01, height: height * 0.22}}>
         <FlatList
@@ -132,10 +118,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-  },
-  child: {
-    height: height * 0.25,
-    width: width,
   },
   body: {
     padding: width * 0.01,
