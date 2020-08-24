@@ -27,14 +27,13 @@ export default function MerchantItem({
   goTo,
 }) {
   const navigation = useNavigation();
-  const {merchantId, merchantLat, merchantLong} = useContext(StoreContext);
+  const {merchantId, merchantLoc} = useContext(StoreContext);
 
   return (
     <Pressable
       onPress={() => [
         merchantId.setMerchantId(id),
-        merchantLat.setMerchantLat(lat),
-        merchantLong.setMerchantLong(long),
+        merchantLoc.setMerchantLoc({lat, long}),
         navigation.navigate(goTo, {
           id,
           image,

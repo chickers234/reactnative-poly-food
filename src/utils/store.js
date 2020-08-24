@@ -3,18 +3,14 @@ import React, {createContext, useState} from 'react';
 export const StoreContext = createContext(null);
 
 export default ({children}) => {
-  const [userLat, setUserLat] = useState();
-  const [userLong, setUserLong] = useState();
+  const [userLoc, setUserLoc] = useState({lat: 0, long: 0});
   const [merchantId, setMerchantId] = useState('');
-  const [merchantLat, setMerchantLat] = useState();
-  const [merchantLong, setMerchantLong] = useState();
+  const [merchantLoc, setMerchantLoc] = useState({lat: 0, long: 0});
 
   const store = {
-    userLat: {userLat, setUserLat},
-    userLong: {userLong, setUserLong},
+    userLoc: {userLoc, setUserLoc},
     merchantId: {merchantId, setMerchantId},
-    merchantLat: {merchantLat, setMerchantLat},
-    merchantLong: {merchantLong, setMerchantLong},
+    merchantLoc: {merchantLoc, setMerchantLoc},
   };
 
   return (

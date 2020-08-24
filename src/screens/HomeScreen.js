@@ -1,6 +1,6 @@
 import database from '@react-native-firebase/database';
 import {getDistance} from 'geolib';
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -41,7 +41,7 @@ export default function HomeScreen() {
   const [latitude, setLat] = useState('');
   const [longitude, setLong] = useState('');
   const [data, setData] = useState([]);
-  const {userLat, userLong} = useContext(StoreContext);
+  const {userLoc} = useContext(StoreContext);
   const numColumns = 4;
 
   useEffect(() => {
@@ -52,15 +52,15 @@ export default function HomeScreen() {
       .then((location) => {
         setLat(location.latitude);
         setLong(location.longitude);
-        userLat.setUserLat(location.latitude);
-        userLong.setUserLong(location.longitude);
+        userLoc.setUserLoc({lat: location.latitude, long: location.longitude});
         //console.log('lat: ' + latitude + ' - long: ' + longitude);
       })
       .catch((error) => {
         const {code, message} = error;
         console.warn(code, message);
       });
-  }, [userLat, userLong]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     let MerchantList = [];
