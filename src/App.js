@@ -14,6 +14,8 @@ export default function App() {
       console.log(remoteMessage);
     });
 
+    getFcmToken();
+
     return unsubscribe;
   }, []);
 
@@ -31,13 +33,11 @@ export default function App() {
   const getFcmToken = async () => {
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
-      console.log(fcmToken);
       console.log('Your Firebase Token is:', fcmToken);
     } else {
       console.log('Failed', 'No token received');
     }
   };
-
   return (
     <StoreProvider>
       <RootStack />

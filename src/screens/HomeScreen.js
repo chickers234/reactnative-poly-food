@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import GetLocation from 'react-native-get-location';
+import Geocoder from 'react-native-geocoding';
 import {CategoryItem, MerchantItem} from '../components/List';
 import {SwiperList} from '../components/Swiper';
 import CategoryList from '../data/CategoryList';
@@ -40,24 +41,36 @@ export default function HomeScreen() {
   const [latitude, setLat] = useState('');
   const [longitude, setLong] = useState('');
   const [data, setData] = useState([]);
-  const {userLoc} = useContext(StoreContext);
+  const {userLoc, userPos} = useContext(StoreContext);
   const numColumns = 4;
 
   useEffect(() => {
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
       timeout: 15000,
+      maximumAge: 10000,
     })
       .then((location) => {
         setLat(location.latitude);
         setLong(location.longitude);
         userLoc.setUserLoc({lat: location.latitude, long: location.longitude});
         //console.log('lat: ' + latitude + ' - long: ' + longitude);
+
+        Geocoder.init('AIzaSyAI5He5yXpm2806AgEH3Mvy_aQk4hfzxV4', {
+          language: 'vi',
+        });
+        Geocoder.from(location.latitude, location.longitude)
+          .then((json) => {
+            userPos.setUserPos(json.results[0].formatted_address);
+            console.log(json.results[0].formatted_address);
+          })
+          .catch((error) => console.log(error));
       })
       .catch((error) => {
         const {code, message} = error;
         console.warn(code, message);
       });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

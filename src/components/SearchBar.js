@@ -16,7 +16,7 @@ export default function SearchBar({goTo, tag, backTo}) {
   const navigation = useNavigation();
   const [query, onChangeText] = useState('');
   return (
-    <LinearGradient colors={['#FE642E', '#FF8000']} style={styles.container}>
+    <LinearGradient colors={['#FFBF00', '#FFBF00']} style={styles.container}>
       <StatusBar
         translucent={true}
         backgroundColor={'transparent'}
@@ -32,7 +32,7 @@ export default function SearchBar({goTo, tag, backTo}) {
         }}>
         <Pressable onPress={() => navigation.navigate(backTo)}>
           <View style={styles.icon}>
-            <Ionicons name="ios-arrow-back-sharp" color="white" size={40} />
+            <Ionicons name="ios-arrow-back-sharp" color="#172737" size={38} />
           </View>
         </Pressable>
 
@@ -44,7 +44,7 @@ export default function SearchBar({goTo, tag, backTo}) {
         />
         <Pressable onPress={() => navigation.navigate(goTo, {tag, query})}>
           <View style={styles.icon}>
-            <FontAwesome name="search" color="white" size={30} />
+            <FontAwesome name="search" color="white" size={28} />
           </View>
         </Pressable>
       </View>

@@ -10,14 +10,12 @@ import {
   View,
 } from 'react-native';
 import colors from '../config/color';
-import CommentScreen from '../screens/DetailMerchant/CommentScreen';
 import MapScreen from '../screens/DetailMerchant/MapScreen';
 import MenuScreen from '../screens/DetailMerchant/MenuScreen';
 import common from '../themes/common';
 
 const Tab = createMaterialTopTabNavigator();
-
-export const {width, height} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 export default function DetailMerchantScreen({route, navigation}) {
   const {id, image, name, address} = route.params;
@@ -57,12 +55,11 @@ export default function DetailMerchantScreen({route, navigation}) {
             fontFamily: 'Roboto-Regular',
             color: colors.black,
           },
-          tabStyle: {width: width * 0.33},
+          tabStyle: {width: width * 0.5},
           style: {backgroundColor: colors.yellow},
         }}>
         <Tab.Screen name="Thực đơn" component={MenuScreen} />
         <Tab.Screen name="Bản đồ" component={MapScreen} />
-        <Tab.Screen name="Đánh giá" component={CommentScreen} />
       </Tab.Navigator>
     </View>
   );
