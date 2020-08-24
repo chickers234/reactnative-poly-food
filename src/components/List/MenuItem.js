@@ -1,8 +1,8 @@
 import React from 'react';
 import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import colors from '../config/color';
-import common from '../themes/common';
+import colors from '../../config/color';
+import common from '../../themes/common';
 
 export const {width, height} = Dimensions.get('window');
 

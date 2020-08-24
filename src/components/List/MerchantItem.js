@@ -9,9 +9,9 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import colors from '../config/color';
-import common from '../themes/common';
-import {StoreContext} from '../utils/store';
+import colors from '../../config/color';
+import common from '../../themes/common';
+import {StoreContext} from '../../utils/store';
 
 export const {width, height} = Dimensions.get('window');
 
@@ -61,12 +61,12 @@ export default function MerchantItem({
               alignItems: 'center',
             }}>
             <Image
-              source={require('../assets/icons/star.png')}
+              source={require('../../assets/icons/star.png')}
               style={styles.icon}
             />
             <Text style={styles.subtitle}>{rating}</Text>
             <Image
-              source={require('../assets/icons/distance.png')}
+              source={require('../../assets/icons/distance.png')}
               style={[styles.icon, {marginLeft: 100}]}
             />
             <Text style={styles.subtitle}>{dis} km</Text>

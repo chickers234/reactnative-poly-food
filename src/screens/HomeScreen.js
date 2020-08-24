@@ -10,15 +10,14 @@ import {
   View,
 } from 'react-native';
 import GetLocation from 'react-native-get-location';
-import CategoryItem from '../components/CategoryItem';
-import MerchantItem from '../components/MerchantItem';
+import {CategoryItem, MerchantItem} from '../components/List';
 import {SwiperList} from '../components/Swiper';
 import CategoryList from '../data/CategoryList';
 import * as helper from '../utils/helper';
 import {StoreContext} from '../utils/store';
 
 const _renderItemCategoty = ({item}) => (
-  <CategoryItem icon={item.icon} title={item.title} />
+  <CategoryItem icon={item.icon} title={item.title} tag={item.tag} />
 );
 
 const _renderItemMerchant = ({item}) => (

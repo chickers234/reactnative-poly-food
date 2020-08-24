@@ -16,7 +16,7 @@ export default function MainStack() {
     <Tab.Navigator
       initialRouteName="HomeScreen"
       tabBarOptions={{
-        activeTintColor: '#DF3A01',
+        activeTintColor: '#FF8000',
         inactiveTintColor: '#BDBDBD',
       }}>
       <Tab.Screen

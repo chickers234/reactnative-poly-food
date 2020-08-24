@@ -1,7 +1,7 @@
 import database from '@react-native-firebase/database';
 import React, {useEffect, useContext, useState} from 'react';
 import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
-import MenuItem from '../../components/MenuItem';
+import {MenuItem} from '../../components/List';
 import {StoreContext} from '../../utils/store';
 
 const _renderItem = ({item}) => (
