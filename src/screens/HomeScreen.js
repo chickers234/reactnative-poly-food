@@ -5,6 +5,7 @@ import {
   Dimensions,
   FlatList,
   Platform,
+  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -106,6 +107,11 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <StatusBar
+        translucent={true}
+        backgroundColor={'transparent'}
+        barStyle="light-content"
+      />
       <View style={{height: height * 0.25}}>
         <SwiperList />
       </View>

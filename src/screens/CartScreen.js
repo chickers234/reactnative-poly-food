@@ -10,12 +10,7 @@ export default function CartScreen() {
 
   return (
     <View style={styles.container}>
-      <StatusBar
-        translucent={true}
-        backgroundColor={'transparent'}
-        barStyle="dark-content"
-      />
-
+      <View style={styles.header} />
       <View style={[styles.section, {flex: 1.5}]}>
         <Title text="Địa điểm giao hàng" />
         <View style={styles.row}>
@@ -48,12 +43,9 @@ export default function CartScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
-    paddingHorizontal: 5,
     backgroundColor: colors.lightgray,
   },
   section: {
-    padding: 10,
     backgroundColor: 'white',
     marginBottom: 10,
     shadowColor: colors.lightgray,
@@ -66,6 +58,12 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderRadius: 5,
     flex: 2,
+    margin: 5,
+    padding: 10,
+  },
+  header: {
+    backgroundColor: colors.yellow,
+    height: 40,
   },
   row: {
     alignItems: 'center',

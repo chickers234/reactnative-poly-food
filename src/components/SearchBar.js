@@ -28,11 +28,11 @@ export default function SearchBar({goTo, tag, backTo}) {
           flexDirection: 'row',
           flex: 1,
           alignItems: 'center',
-          marginBottom: 10,
+          marginBottom: 5,
         }}>
         <Pressable onPress={() => navigation.navigate(backTo)}>
           <View style={styles.icon}>
-            <Ionicons name="ios-arrow-back-sharp" color="#172737" size={38} />
+            <Ionicons name="ios-arrow-back-sharp" color="#172737" size={35} />
           </View>
         </Pressable>
 
@@ -44,7 +44,7 @@ export default function SearchBar({goTo, tag, backTo}) {
         />
         <Pressable onPress={() => navigation.navigate(goTo, {tag, query})}>
           <View style={styles.icon}>
-            <FontAwesome name="search" color="white" size={28} />
+            <FontAwesome name="search" color="white" size={25} />
           </View>
         </Pressable>
       </View>
@@ -66,13 +66,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 5,
     flex: 4,
-    height: 40,
+    height: 38,
     borderRadius: 5,
   },
   icon: {
     marginHorizontal: 5,
-    height: 45,
-    width: 45,
+    height: 40,
+    width: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
