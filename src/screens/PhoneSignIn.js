@@ -1,0 +1,158 @@
+import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
+import {
+  Image,
+  Pressable,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import colors from '../config/color';
+import common from '../themes/common';
+
+export default function PhoneSignIn() {
+  const [confirm, setConfirm] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [code, setCode] = useState('');
+  const navigation = useNavigation();
+
+  const signInWithPhoneNumber = async (phoneNumber) => {
+    const confirmation = await auth().signInWithPhoneNumber(
+      '+84' + phoneNumber,
+    );
+    setConfirm(confirmation);
+  };
+
+  const confirmCode = async () => {
+    if (code) {
+      try {
+        await confirm.confirm(code);
+        navigation.navigate('Main');
+        console.log('uid: ' + auth().currentUser.uid);
+      } catch (error) {
+        console.log('Invalid code!');
+        alert('Mã OTP không hợp lệ!');
+      }
+    }
+  };
+
+  const Header = () => {
+    return (
+      <View>
+        <StatusBar
+          translucent={true}
+          backgroundColor={'transparent'}
+          barStyle="dark-content"
+        />
+        <Image
+          style={styles.logo}
+          source={require('../assets/icons/logo.png')}
+        />
+      </View>
+    );
+  };
+
+  if (!confirm) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.section1}>
+          <Header />
+        </View>
+        <View style={styles.section2}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Image
+              style={[styles.flat, {flex: 1}]}
+              source={require('../assets/icons/vietnam.png')}
+            />
+            <TextInput
+              style={[styles.customTextInput, {flex: 5}]}
+              value={phoneNumber}
+              onChangeText={(text) => setPhoneNumber(text)}
+              keyboardType="numeric"
+              textAlign={'center'}
+              placeholder="Nhập số điện thoại"
+            />
+          </View>
+          <Pressable
+            style={styles.customButton}
+            onPress={() => signInWithPhoneNumber(phoneNumber)}>
+            <Text style={[common.subtitle, {color: colors.white}]}>
+              Đăng nhập
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    );
+  }
+  return (
+    <>
+      <View style={styles.section1}>
+        <Header />
+      </View>
+      <View style={styles.section2}>
+        <TextInput
+          style={styles.customTextInput}
+          value={code}
+          onChangeText={(text) => setCode(text)}
+          keyboardType="numeric"
+          textAlign={'center'}
+          placeholder="Nhập mã OTP"
+        />
+        <Pressable style={styles.customButton} onPress={() => confirmCode()}>
+          <Text style={[common.subtitle, {color: colors.white}]}>XÁC NHẬN</Text>
+        </Pressable>
+      </View>
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  section1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  section2: {
+    flex: 3,
+    backgroundColor: colors.yellow,
+    padding: 10,
+  },
+  logo: {
+    height: 120,
+    width: 120,
+  },
+  customTextInput: {
+    height: 45,
+    borderColor: colors.black,
+    borderWidth: 1,
+    borderRadius: 5,
+    color: colors.black,
+    fontFamily: 'Roboto-Bold',
+    fontSize: 18,
+  },
+  customButton: {
+    height: 40,
+    backgroundColor: colors.black,
+    color: colors.yellow,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  flat: {
+    height: 50,
+    width: 50,
+    marginRight: 10,
+  },
+});

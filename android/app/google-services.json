@@ -70,6 +70,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyAI5He5yXpm2806AgEH3Mvy_aQk4hfzxV4"
+        },
+        {
+          "current_key": "AIzaSyDiyGCLuWgWu87CnO9RsfeYQQCDdSIKGWk"
         }
       ],
       "services": {
@@ -78,6 +81,13 @@
             {
               "client_id": "627561606133-quge0s9r0k7ben91258s63qpk1sci847.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "627561606133-mu3tp8cvf0egh82fbiafmv2752ssqbbd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.PolyFood"
+              }
             }
           ]
         }
@@ -171,6 +181,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyAI5He5yXpm2806AgEH3Mvy_aQk4hfzxV4"
+        },
+        {
+          "current_key": "AIzaSyDiyGCLuWgWu87CnO9RsfeYQQCDdSIKGWk"
         }
       ],
       "services": {
@@ -179,6 +192,13 @@
             {
               "client_id": "627561606133-quge0s9r0k7ben91258s63qpk1sci847.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "627561606133-mu3tp8cvf0egh82fbiafmv2752ssqbbd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.PolyFood"
+              }
             }
           ]
         }
@@ -248,6 +268,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyAI5He5yXpm2806AgEH3Mvy_aQk4hfzxV4"
+        },
+        {
+          "current_key": "AIzaSyDiyGCLuWgWu87CnO9RsfeYQQCDdSIKGWk"
         }
       ],
       "services": {
@@ -256,6 +279,13 @@
             {
               "client_id": "627561606133-quge0s9r0k7ben91258s63qpk1sci847.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "627561606133-mu3tp8cvf0egh82fbiafmv2752ssqbbd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.PolyFood"
+              }
             }
           ]
         }
@@ -263,14 +293,14 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:627561606133:android:baa1f6d3c0fdd17cb2cebc",
+        "mobilesdk_app_id": "1:627561606133:android:f357c8fd7749ba88b2cebc",
         "android_client_info": {
           "package_name": "com.polyfood"
         }
       },
       "oauth_client": [
         {
-          "client_id": "627561606133-dsmtldu500io8bodte0miduncoflbc4m.apps.googleusercontent.com",
+          "client_id": "627561606133-pachmpqeosd9hlcrm9q1pc8906mku9n3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.polyfood",
@@ -285,6 +315,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyAI5He5yXpm2806AgEH3Mvy_aQk4hfzxV4"
+        },
+        {
+          "current_key": "AIzaSyDiyGCLuWgWu87CnO9RsfeYQQCDdSIKGWk"
         }
       ],
       "services": {
@@ -293,6 +326,13 @@
             {
               "client_id": "627561606133-quge0s9r0k7ben91258s63qpk1sci847.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "627561606133-mu3tp8cvf0egh82fbiafmv2752ssqbbd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.PolyFood"
+              }
             }
           ]
         }
