@@ -15,7 +15,7 @@ import common from '../themes/common';
 
 export default function PhoneSignIn() {
   const [confirm, setConfirm] = useState(null);
-  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [number, setNumber] = useState(null);
   const [code, setCode] = useState('');
   const navigation = useNavigation();
 
@@ -27,15 +27,17 @@ export default function PhoneSignIn() {
   };
 
   const confirmCode = async () => {
-    if (code) {
-      try {
-        await confirm.confirm(code);
+    try {
+      await confirm.confirm(code).then(() => {
         navigation.navigate('Main');
+        setConfirm(null);
+        setNumber('');
+        setCode('');
         console.log('uid: ' + auth().currentUser.uid);
-      } catch (error) {
-        console.log('Invalid code!');
-        alert('Mã OTP không hợp lệ!');
-      }
+      });
+    } catch (error) {
+      console.log(error);
+      alert('Mã OTP không hợp lệ!');
     }
   };
 
@@ -73,8 +75,8 @@ export default function PhoneSignIn() {
             />
             <TextInput
               style={[styles.customTextInput, {flex: 5}]}
-              value={phoneNumber}
-              onChangeText={(text) => setPhoneNumber(text)}
+              value={number}
+              onChangeText={(text) => setNumber(text)}
               keyboardType="numeric"
               textAlign={'center'}
               placeholder="Nhập số điện thoại"
@@ -82,7 +84,7 @@ export default function PhoneSignIn() {
           </View>
           <Pressable
             style={styles.customButton}
-            onPress={() => signInWithPhoneNumber(phoneNumber)}>
+            onPress={() => signInWithPhoneNumber(number)}>
             <Text style={[common.subtitle, {color: colors.white}]}>
               Đăng nhập
             </Text>
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     color: colors.black,
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Roboto-Regular',
     fontSize: 18,
   },
   customButton: {

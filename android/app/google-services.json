@@ -300,11 +300,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "627561606133-pachmpqeosd9hlcrm9q1pc8906mku9n3.apps.googleusercontent.com",
+          "client_id": "627561606133-npp5f1jirre05fsvdcn10ek9h5o0h4gb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.polyfood",
-            "certificate_hash": "dc9c89369885cb4f61f188268afd7918a15ef353"
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {

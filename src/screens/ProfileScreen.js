@@ -7,10 +7,20 @@ import common from '../themes/common';
 
 export default function ProfileScreen() {
   const navigation = useNavigation();
+  console.log(auth().currentUser.uid);
 
   const logOut = async () => {
-    auth().signOut();
-    navigation.navigate('PhoneSignIn');
+    auth()
+      .signOut()
+      .then(
+        () => {
+          console.log('Signed Out');
+          navigation.navigate('PhoneSignIn');
+        },
+        (error) => {
+          console.error('Sign Out Error', error);
+        },
+      );
   };
   return (
     <View style={styles.container}>
