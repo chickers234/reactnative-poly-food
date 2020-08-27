@@ -1,7 +1,7 @@
 import React, {useContext, useRef, useState} from 'react';
 import {
-  Dimensions,
   Alert,
+  Dimensions,
   Pressable,
   StyleSheet,
   Text,
@@ -11,6 +11,7 @@ import FastImage from 'react-native-fast-image';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import colors from '../../config/color';
 import common from '../../themes/common';
+import * as helper from '../../utils/helper';
 import {StoreContext} from '../../utils/store';
 
 export const {width, height} = Dimensions.get('window');
@@ -54,12 +55,12 @@ export default function MenuItem({id, image, name, price}) {
             exist = true;
             cartList.cartList[i].soluong =
               cartList.cartList[i].soluong + oder.soluong;
+            cartList.setCartList(cartList.cartList.concat([]));
           }
         }
         if (!exist) {
           cartList.setCartList(cartList.cartList.concat(oder));
         }
-        cartList.setCartList(cartList.cartList.concat([]));
       } else {
         Alert.alert(
           //title
@@ -103,7 +104,7 @@ export default function MenuItem({id, image, name, price}) {
         <View style={{justifyContent: 'space-around'}}>
           <Text style={common.title}>{name}</Text>
           <Text style={[common.subtitle, {color: colors.gray}]}>
-            {price} VNĐ
+            {helper.formatMoney(price)} VNĐ
           </Text>
           <Text
             style={[
@@ -136,7 +137,7 @@ export default function MenuItem({id, image, name, price}) {
         }}>
         <View style={styles.bottom}>
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.price}>{price} VNĐ</Text>
+          <Text style={styles.price}>{helper.formatMoney(price)} VNĐ</Text>
           <View style={styles.row}>
             <Pressable onPress={() => sub()}>
               <Text style={styles.button}>-</Text>
@@ -147,7 +148,9 @@ export default function MenuItem({id, image, name, price}) {
             </Pressable>
           </View>
           <Pressable style={styles.buttonAdd} onPress={() => addToCart()}>
-            <Text style={styles.add}>Thêm vào giỏ hàng - {total} VNĐ</Text>
+            <Text style={styles.add}>
+              Thêm vào giỏ hàng - {helper.formatMoney(total)} VNĐ
+            </Text>
           </Pressable>
         </View>
       </RBSheet>

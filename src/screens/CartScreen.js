@@ -1,8 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {Image, StyleSheet, FlatList, Text, View} from 'react-native';
 import Title from '../components/Title';
 import colors from '../config/color';
 import common from '../themes/common';
+import * as helper from '../utils/helper';
 import {StoreContext} from '../utils/store';
 import {CartItem} from '../components/List';
 
@@ -18,7 +19,20 @@ const _renderItem = ({item}) => (
 export default function CartScreen() {
   const {userPos} = useContext(StoreContext);
   const {merchantId, cartList} = useContext(StoreContext);
+  const [totalPrice, setTotalPrice] = useState(0);
   console.log(cartList.cartList);
+
+  useEffect(() => {
+    getTotal(cartList.cartList);
+  }, [cartList.cartList]);
+
+  function getTotal(data) {
+    let total = 0;
+    for (let i = 0; i < data.length; i++) {
+      total += data[i].soluong * data[i].gia;
+    }
+    setTotalPrice(total);
+  }
 
   return (
     <View style={styles.container}>
@@ -34,12 +48,27 @@ export default function CartScreen() {
         </View>
       </View>
 
-      <View style={[styles.section, {flex: 10}]}>
+      <View style={[styles.section, {flex: 9}]}>
         <Title text="Chi tiết đơn hàng" />
         <FlatList
           data={cartList.cartList}
           keyExtractor={(item, index) => index.toString()}
           renderItem={_renderItem}
+        />
+      </View>
+
+      <View
+        style={{
+          flex: 0.6,
+          width: '95%',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
+          alignSelf: 'center',
+        }}>
+        <Title text="Tổng hoá đơn:" color={colors.black} />
+        <Title
+          text={helper.formatMoney(totalPrice) + ' VNĐ'}
+          color={colors.black}
         />
       </View>
       <View
@@ -52,7 +81,7 @@ export default function CartScreen() {
             backgroundColor: colors.black,
           },
         ]}>
-        <Title text="Đặt Đơn" color="#FFBF00" />
+        <Title text={'Đặt Đơn'} color="#FFBF00" />
       </View>
     </View>
   );

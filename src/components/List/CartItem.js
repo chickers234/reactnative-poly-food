@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import colors from '../../config/color';
 import common from '../../themes/common';
 import {StoreContext} from '../../utils/store';
+import * as helper from '../../utils/helper';
 
 export const {width, height} = Dimensions.get('window');
 
@@ -24,7 +25,7 @@ export default function CartItem({id, image, name, price, count}) {
         <View style={{justifyContent: 'space-around'}}>
           <Text style={common.title}>{name}</Text>
           <Text style={[common.subtitle, {color: colors.gray}]}>
-            {price} VNĐ
+            {helper.formatMoney(price)} VNĐ
           </Text>
           <Text
             style={[
