@@ -7,7 +7,6 @@ import common from '../themes/common';
 
 export default function ProfileScreen() {
   const navigation = useNavigation();
-  console.log(auth().currentUser.uid);
 
   const logOut = async () => {
     auth()

@@ -1,4 +1,6 @@
-import 'intl/locale-data/jsonp/en';
+import moment from 'moment';
+import 'moment/locale/vi';
+moment.locale('vi');
 
 export function getDistance(dis) {
   return Math.round(dis / 100) / 10;
@@ -17,11 +19,10 @@ export function sortByDistance(data) {
   return data.sort(compare);
 }
 
-export function formatMoney(currency) {
-  const formatter = new Intl.NumberFormat('en-US', {
-    currency: 'VND',
-    minimumFractionDigits: 0,
-  });
+export function getNow() {
+  return moment().format('llll');
+}
 
-  return formatter.format(currency);
+export function formatMoney(currency) {
+  return currency.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }

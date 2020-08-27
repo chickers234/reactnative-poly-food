@@ -1,32 +1,58 @@
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
-import colors from '../config/color';
-import HistoryBill from '../screens/DetailBill/HistoryBill';
-import ProcessingBill from '../screens/DetailBill/ProcessingBill';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
+import {BillItem} from '../components/List';
+import common from '../themes/common';
 
-const Tab = createMaterialTopTabNavigator();
 const {width, height} = Dimensions.get('window');
 
+const _renderItem = ({item}) => (
+  <BillItem id={item.id} time={item.time} status={item.status} />
+);
+
 export default function BillScreen() {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    let BillList = [];
+    const onValueChange = database()
+      .ref(`/DonHang/User/${auth().currentUser.uid}`)
+      .on('value', (snapshot) => {
+        snapshot.forEach((child) => {
+          BillList.push({
+            id: child.val().id,
+            time: child.val().time,
+            status: child.val().status,
+          });
+        });
+        setData(BillList);
+      });
+
+    return () =>
+      database()
+        .ref(`/DonHang/User/${auth().currentUser.uid}`)
+        .off('value', onValueChange);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Tab.Navigator
-        tabBarOptions={{
-          labelStyle: {
-            fontSize: 13,
-            fontFamily: 'Roboto-Regular',
-            color: colors.black,
-          },
-          tabStyle: {width: width * 0.5, paddingTop: 40},
-          style: {backgroundColor: colors.yellow},
-        }}>
-        <Tab.Screen name="Đang xử lý" component={HistoryBill} />
-        <Tab.Screen name="Lịch sử giao dịch" component={ProcessingBill} />
-      </Tab.Navigator>
+      <View style={common.header} />
+      <View style={styles.body}>
+        <FlatList
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={_renderItem}
+        />
+      </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {
+    flex: 1,
+  },
+  body: {
+    padding: width * 0.01,
+  },
 });

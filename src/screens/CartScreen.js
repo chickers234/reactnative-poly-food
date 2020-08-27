@@ -1,11 +1,13 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {Image, StyleSheet, FlatList, Text, View} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
+import React, {useContext, useEffect, useState} from 'react';
+import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {CartItem} from '../components/List';
 import Title from '../components/Title';
 import colors from '../config/color';
 import common from '../themes/common';
 import * as helper from '../utils/helper';
 import {StoreContext} from '../utils/store';
-import {CartItem} from '../components/List';
 
 const _renderItem = ({item}) => (
   <CartItem
@@ -18,27 +20,70 @@ const _renderItem = ({item}) => (
 
 export default function CartScreen() {
   const {userPos} = useContext(StoreContext);
-  const {merchantId, cartList} = useContext(StoreContext);
+  const {cartList} = useContext(StoreContext);
+  const [data, setData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   console.log(cartList.cartList);
 
   useEffect(() => {
+    setData(cartList.cartList);
     getTotal(cartList.cartList);
   }, [cartList.cartList]);
 
-  function getTotal(data) {
+  const getTotal = (data) => {
     let total = 0;
     for (let i = 0; i < data.length; i++) {
       total += data[i].soluong * data[i].gia;
     }
     setTotalPrice(total);
-  }
+  };
+
+  const gioHangList = (key) => {
+    let obj = {
+      id: key,
+      adress: userPos.userPos,
+      macuahang: cartList.cartList[0].macuahang,
+      name: 'Tai',
+      phonenumber: '0903997981',
+      status: 'Chờ xử lý',
+      time: helper.getNow(),
+      total: totalPrice,
+      uid: auth().currentUser.uid,
+      gioHangList: cartList.cartList,
+    };
+
+    return obj;
+  };
+
+  const submit = async () => {
+    try {
+      const merchantRef = database()
+        .ref(`/DonHang/CuaHang/${cartList.cartList[0].macuahang}`)
+        .push();
+      await merchantRef.set(gioHangList(merchantRef.key)).catch((error) => {
+        console.log(error);
+      });
+
+      const userRef = database()
+        .ref(`/DonHang/User/${auth().currentUser.uid}`)
+        .push();
+      await userRef.set(gioHangList(userRef.key)).catch((error) => {
+        console.log(error);
+      });
+
+      cartList.setCartList([]);
+      setData([]);
+      setTotalPrice(0);
+    } catch (error) {
+      alert('Giỏ hàng trống!');
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.header} />
+      <View style={common.header} />
       <View style={[styles.section, {flex: 1.5}]}>
-        <Title text="Địa điểm giao hàng" />
+        <Title text="Địa điểm giao hàng" fontFamily="regular" size={18} />
         <View style={styles.row}>
           <Image
             style={styles.icon}
@@ -49,9 +94,9 @@ export default function CartScreen() {
       </View>
 
       <View style={[styles.section, {flex: 9}]}>
-        <Title text="Chi tiết đơn hàng" />
+        <Title text="Chi tiết đơn hàng" fontFamily="regular" size={18} />
         <FlatList
-          data={cartList.cartList}
+          data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={_renderItem}
         />
@@ -65,13 +110,21 @@ export default function CartScreen() {
           flexDirection: 'row',
           alignSelf: 'center',
         }}>
-        <Title text="Tổng hoá đơn:" color={colors.black} />
+        <Title
+          text="Tổng hoá đơn:"
+          color={colors.black}
+          fontFamily="regular"
+          size={18}
+        />
         <Title
           text={helper.formatMoney(totalPrice) + ' VNĐ'}
           color={colors.black}
+          fontFamily="regular"
+          size={18}
         />
       </View>
-      <View
+
+      <Pressable
         style={[
           styles.section,
           {
@@ -80,9 +133,15 @@ export default function CartScreen() {
             alignItems: 'center',
             backgroundColor: colors.black,
           },
-        ]}>
-        <Title text={'Đặt Đơn'} color="#FFBF00" />
-      </View>
+        ]}
+        onPress={() => submit()}>
+        <Title
+          text={'Đặt Đơn'}
+          color="#FFBF00"
+          fontFamily="regular"
+          size={18}
+        />
+      </Pressable>
     </View>
   );
 }
@@ -106,10 +165,6 @@ const styles = StyleSheet.create({
     flex: 2,
     margin: 5,
     padding: 10,
-  },
-  header: {
-    backgroundColor: colors.yellow,
-    height: 40,
   },
   row: {
     alignItems: 'center',
