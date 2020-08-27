@@ -1,9 +1,17 @@
-import React, {useRef, useState} from 'react';
-import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useContext, useRef, useState} from 'react';
+import {
+  Dimensions,
+  Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import colors from '../../config/color';
 import common from '../../themes/common';
-import RBSheet from 'react-native-raw-bottom-sheet';
+import {StoreContext} from '../../utils/store';
 
 export const {width, height} = Dimensions.get('window');
 
@@ -11,6 +19,7 @@ export default function MenuItem({id, image, name, price}) {
   const refRBSheet = useRef();
   const [count, setCount] = useState(1);
   const [total, setTotal] = useState(price);
+  const {merchantId, cartList} = useContext(StoreContext);
 
   const add = () => {
     setCount(count + 1);
@@ -26,6 +35,59 @@ export default function MenuItem({id, image, name, price}) {
 
   const sum = (num) => {
     setTotal(num * price);
+  };
+
+  const addToCart = () => {
+    let oder = {
+      tenmonan: name,
+      gia: price,
+      hinhanh: image,
+      macuahang: merchantId.merchantId,
+      mamonan: id,
+      soluong: count,
+    };
+    try {
+      if (oder.macuahang === cartList.cartList[0].macuahang) {
+        let exist = false;
+        for (let i = 0; i < cartList.cartList.length; i++) {
+          if (oder.mamonan === cartList.cartList[i].mamonan) {
+            exist = true;
+            cartList.cartList[i].soluong =
+              cartList.cartList[i].soluong + oder.soluong;
+          }
+        }
+        if (!exist) {
+          cartList.setCartList(cartList.cartList.concat(oder));
+        }
+        cartList.setCartList(cartList.cartList.concat([]));
+      } else {
+        Alert.alert(
+          //title
+          'Thông báo',
+          //body
+          'Đặt món ăn trên sẽ xoá giỏ hàng hiện tại. Bạn có muốn tiếp tục?',
+          [
+            {
+              text: 'Xác nhận',
+              onPress: () => {
+                let orders = [];
+                cartList.setCartList(orders.concat(oder));
+              },
+            },
+            {
+              text: 'Huỷ',
+              onPress: () => console.log('Huỷ'),
+              style: 'cancel',
+            },
+          ],
+          {cancelable: true},
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      cartList.setCartList(cartList.cartList.concat(oder));
+    }
+    refRBSheet.current.close();
   };
 
   return (
@@ -84,7 +146,7 @@ export default function MenuItem({id, image, name, price}) {
               <Text style={styles.button}>+</Text>
             </Pressable>
           </View>
-          <Pressable style={styles.buttonAdd}>
+          <Pressable style={styles.buttonAdd} onPress={() => addToCart()}>
             <Text style={styles.add}>Thêm vào giỏ hàng - {total} VNĐ</Text>
           </Pressable>
         </View>
@@ -109,7 +171,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: 'Roboto-Bold',
-    fontSize: 24,
+    fontSize: 20,
     color: colors.black,
   },
   price: {
@@ -146,7 +208,7 @@ const styles = StyleSheet.create({
   },
   add: {
     fontFamily: 'Roboto-Regular',
-    fontSize: 18,
+    fontSize: 16,
     color: colors.white,
   },
 });

@@ -1,19 +1,37 @@
 import database from '@react-native-firebase/database';
-import React, {useEffect, useContext, useState} from 'react';
-import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import React, {useContext, useEffect, useState} from 'react';
+import {
+  Dimensions,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {MenuItem} from '../../components/List';
+import colors from '../../config/color';
 import {StoreContext} from '../../utils/store';
 
 const _renderItem = ({item}) => (
-  <MenuItem image={item.image} name={item.name} price={item.price} />
+  <MenuItem
+    image={item.image}
+    name={item.name}
+    price={item.price}
+    id={item.id}
+  />
 );
 
 export const {width, height} = Dimensions.get('window');
 
 export default function MenuScreen() {
-  //const id = 'CH02';
   const [menu, setMenu] = useState([]);
   const {merchantId} = useContext(StoreContext);
+  const navigation = useNavigation();
+
+  const goToCart = () => {
+    navigation.navigate('Main', {screen: 'CartScreen'});
+  };
 
   useEffect(() => {
     let MenuList = [];
@@ -45,6 +63,9 @@ export default function MenuScreen() {
         keyExtractor={(item, index) => index.toString()}
         renderItem={_renderItem}
       />
+      <Pressable style={styles.buttonAdd} onPress={() => goToCart()}>
+        <Text style={styles.add}>Xem giỏ hàng</Text>
+      </Pressable>
     </View>
   );
 }
@@ -53,5 +74,20 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     flex: 1,
+  },
+  buttonAdd: {
+    width: '100%',
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    margin: 20,
+    backgroundColor: colors.black,
+    borderRadius: 5,
+  },
+  add: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    color: colors.white,
   },
 });

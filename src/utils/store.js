@@ -7,12 +7,14 @@ export default ({children}) => {
   const [userPos, setUserPos] = useState('');
   const [merchantId, setMerchantId] = useState('');
   const [merchantLoc, setMerchantLoc] = useState({lat: 0, long: 0});
+  const [cartList, setCartList] = useState([]);
 
   const store = {
     userLoc: {userLoc, setUserLoc},
     userPos: {userPos, setUserPos},
     merchantId: {merchantId, setMerchantId},
     merchantLoc: {merchantLoc, setMerchantLoc},
+    cartList: {cartList, setCartList},
   };
 
   return (

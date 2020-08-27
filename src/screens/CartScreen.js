@@ -1,12 +1,24 @@
 import React, {useContext} from 'react';
-import {Text, Image, StyleSheet, StatusBar, View} from 'react-native';
-import {StoreContext} from '../utils/store';
+import {Image, StyleSheet, FlatList, Text, View} from 'react-native';
 import Title from '../components/Title';
-import common from '../themes/common';
 import colors from '../config/color';
+import common from '../themes/common';
+import {StoreContext} from '../utils/store';
+import {CartItem} from '../components/List';
+
+const _renderItem = ({item}) => (
+  <CartItem
+    image={item.hinhanh}
+    name={item.tenmonan}
+    price={item.gia}
+    count={item.soluong}
+  />
+);
 
 export default function CartScreen() {
   const {userPos} = useContext(StoreContext);
+  const {merchantId, cartList} = useContext(StoreContext);
+  console.log(cartList.cartList);
 
   return (
     <View style={styles.container}>
@@ -24,6 +36,11 @@ export default function CartScreen() {
 
       <View style={[styles.section, {flex: 10}]}>
         <Title text="Chi tiết đơn hàng" />
+        <FlatList
+          data={cartList.cartList}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={_renderItem}
+        />
       </View>
       <View
         style={[

@@ -1,6 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   Pressable,
@@ -19,6 +19,18 @@ export default function PhoneSignIn() {
   const [code, setCode] = useState('');
   const navigation = useNavigation();
 
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        navigation.navigate('Main');
+        setConfirm(null);
+        setNumber('');
+        setCode('');
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const signInWithPhoneNumber = async (phoneNumber) => {
     const confirmation = await auth().signInWithPhoneNumber(
       '+84' + phoneNumber,
@@ -29,10 +41,6 @@ export default function PhoneSignIn() {
   const confirmCode = async () => {
     try {
       await confirm.confirm(code).then(() => {
-        navigation.navigate('Main');
-        setConfirm(null);
-        setNumber('');
-        setCode('');
         console.log('uid: ' + auth().currentUser.uid);
       });
     } catch (error) {
