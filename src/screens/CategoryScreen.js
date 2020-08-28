@@ -29,28 +29,20 @@ export default function CategoryScreen({route}) {
   const {userLoc} = useContext(StoreContext);
 
   useEffect(() => {
-    let MerchantList = [];
-    const onValueChange = database()
-      .ref('/CuaHang')
-      .on('value', (snapshot) => {
-        snapshot.forEach((child) => {
-          let dis = getDistance(
-            {latitude: userLoc.userLoc.lat, longitude: userLoc.userLoc.long},
-            {latitude: child.val().latitude, longitude: child.val().longitude},
-          );
-          if (tag === 'TL08') {
-            MerchantList.push({
-              id: child.val().macuahang,
-              image: child.val().hinhanh,
-              name: child.val().tencuahang,
-              address: child.val().diachi,
-              rating: child.val().rating,
-              lat: child.val().latitude,
-              long: child.val().longitude,
-              dis: helper.getDistance(dis),
-            });
-          } else {
-            if (child.val().matheloai === tag) {
+    try {
+      const onValueChange = database()
+        .ref('/CuaHang')
+        .on('value', (snapshot) => {
+          let MerchantList = [];
+          snapshot.forEach((child) => {
+            let dis = getDistance(
+              {latitude: userLoc.userLoc.lat, longitude: userLoc.userLoc.long},
+              {
+                latitude: child.val().latitude,
+                longitude: child.val().longitude,
+              },
+            );
+            if (tag === 'TL08') {
               MerchantList.push({
                 id: child.val().macuahang,
                 image: child.val().hinhanh,
@@ -61,14 +53,26 @@ export default function CategoryScreen({route}) {
                 long: child.val().longitude,
                 dis: helper.getDistance(dis),
               });
+            } else {
+              if (child.val().matheloai === tag) {
+                MerchantList.push({
+                  id: child.val().macuahang,
+                  image: child.val().hinhanh,
+                  name: child.val().tencuahang,
+                  address: child.val().diachi,
+                  rating: child.val().rating,
+                  lat: child.val().latitude,
+                  long: child.val().longitude,
+                  dis: helper.getDistance(dis),
+                });
+              }
             }
-          }
+          });
+          setData(helper.sortByDistance(MerchantList));
         });
-        setData(helper.sortByDistance(MerchantList));
-      });
 
-    // Stop listening for updates when no longer required
-    return () => database().ref('/CuaHang').off('value', onValueChange);
+      return () => database().ref('/CuaHang').off('value', onValueChange);
+    } catch (error) {}
   }, [tag, userLoc.userLoc.lat, userLoc.userLoc.long]);
   return (
     <View style={styles.container}>

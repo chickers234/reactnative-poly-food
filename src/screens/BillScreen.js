@@ -15,10 +15,10 @@ export default function BillScreen() {
   const [data, setData] = useState();
 
   useEffect(() => {
-    let BillList = [];
     const onValueChange = database()
       .ref(`/DonHang/User/${auth().currentUser.uid}`)
       .on('value', (snapshot) => {
+        let BillList = [];
         snapshot.forEach((child) => {
           BillList.push({
             id: child.val().id,
@@ -26,7 +26,7 @@ export default function BillScreen() {
             status: child.val().status,
           });
         });
-        setData(BillList);
+        setData(BillList.reverse());
       });
 
     return () =>

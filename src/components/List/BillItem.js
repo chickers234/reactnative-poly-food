@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Pressable, View} from 'react-native';
-import Title from '../../components/Title';
+import Text from '../Text';
 import colors from '../../config/color';
 import {useNavigation} from '@react-navigation/native';
 
@@ -11,16 +11,16 @@ export default function BillItem({id, time, status}) {
     <View style={styles.container}>
       <Pressable onPress={() => navigation.navigate('DetailBillScreen', {id})}>
         <View style={styles.row}>
-          <Title text={id} fontFamily="bold" size={14} color={colors.red} />
+          <Text text={id} fontFamily="bold" size={14} color={colors.red} />
         </View>
 
         <View style={styles.row}>
-          <Title text="Đặt vào lúc:" fontFamily="regular" size={14} />
-          <Title text={time} fontFamily="regular" size={14} />
+          <Text text="Đặt vào lúc:" fontFamily="regular" size={14} />
+          <Text text={time} fontFamily="regular" size={14} />
         </View>
         <View style={styles.row}>
-          <Title text="Trạng thái:" fontFamily="regular" size={14} />
-          <Title text={status} fontFamily="regular" size={14} />
+          <Text text="Trạng thái:" fontFamily="regular" size={14} />
+          <Text text={status} fontFamily="regular" size={14} />
         </View>
       </Pressable>
     </View>

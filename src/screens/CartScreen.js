@@ -3,7 +3,7 @@ import database from '@react-native-firebase/database';
 import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {CartItem} from '../components/List';
-import Title from '../components/Title';
+import Title from '../components/Text';
 import colors from '../config/color';
 import common from '../themes/common';
 import * as helper from '../utils/helper';
@@ -23,7 +23,6 @@ export default function CartScreen() {
   const {cartList} = useContext(StoreContext);
   const [data, setData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  console.log(cartList.cartList);
 
   useEffect(() => {
     setData(cartList.cartList);
@@ -41,7 +40,7 @@ export default function CartScreen() {
   const gioHangList = (key) => {
     let obj = {
       id: key,
-      adress: userPos.userPos,
+      address: userPos.userPos,
       macuahang: cartList.cartList[0].macuahang,
       name: 'Tai',
       phonenumber: '0903997981',

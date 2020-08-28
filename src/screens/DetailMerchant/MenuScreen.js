@@ -34,26 +34,28 @@ export default function MenuScreen() {
   };
 
   useEffect(() => {
-    let MenuList = [];
-    const onValueChange = database()
-      .ref(`/Menu/${merchantId.merchantId}`)
-      .on('value', (snapshot) => {
-        snapshot.forEach((child) => {
-          MenuList.push({
-            id: child.val().mamonan,
-            image: child.val().hinhanh,
-            name: child.val().tenmonan,
-            price: child.val().gia,
-          });
-        });
-        setMenu(MenuList);
-      });
-
-    // Stop listening for updates when no longer required
-    return () =>
-      database()
+    try {
+      const onValueChange = database()
         .ref(`/Menu/${merchantId.merchantId}`)
-        .off('value', onValueChange);
+        .on('value', (snapshot) => {
+          let MenuList = [];
+          snapshot.forEach((child) => {
+            MenuList.push({
+              id: child.val().mamonan,
+              image: child.val().hinhanh,
+              name: child.val().tenmonan,
+              price: child.val().gia,
+            });
+          });
+          setMenu(MenuList);
+        });
+
+      // Stop listening for updates when no longer required
+      return () =>
+        database()
+          .ref(`/Menu/${merchantId.merchantId}`)
+          .off('value', onValueChange);
+    } catch (error) {}
   }, [merchantId.merchantId]);
 
   return (

@@ -23,7 +23,7 @@ export default function MainStack() {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Trang chủ',
           tabBarIcon: ({color, size}) => (
             <Entypo name="home" color={color} size={26} />
           ),
@@ -33,7 +33,7 @@ export default function MainStack() {
         name="CartScreen"
         component={CartScreen}
         options={{
-          tabBarLabel: 'Cart',
+          tabBarLabel: 'Giỏ hàng',
           tabBarIcon: ({color, size}) => (
             <Foundation name="shopping-cart" color={color} size={28} />
           ),
@@ -43,7 +43,7 @@ export default function MainStack() {
         name="BillScreen"
         component={BillScreen}
         options={{
-          tabBarLabel: 'Bill',
+          tabBarLabel: 'Hoá đơn',
           tabBarIcon: ({color, size}) => (
             <FontAwesome name="th-list" color={color} size={22} />
           ),
@@ -53,7 +53,7 @@ export default function MainStack() {
         name="ProfileScreen"
         component={ProfileScreen}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Cá nhân',
           tabBarIcon: ({color, size}) => (
             <FontAwesome5 name="user-alt" color={color} size={21} />
           ),

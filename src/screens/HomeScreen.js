@@ -63,7 +63,7 @@ export default function HomeScreen() {
         Geocoder.from(location.latitude, location.longitude)
           .then((json) => {
             userPos.setUserPos(json.results[0].formatted_address);
-            console.log(json.results[0].formatted_address);
+            //console.log(json.results[0].formatted_address);
           })
           .catch((error) => console.log(error));
       })
