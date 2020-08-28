@@ -8,6 +8,8 @@ export default ({children}) => {
   const [merchantId, setMerchantId] = useState('');
   const [merchantLoc, setMerchantLoc] = useState({lat: 0, long: 0});
   const [cartList, setCartList] = useState([]);
+  const [token, setToken] = useState('');
+  const [user, setUser] = useState({});
 
   const store = {
     userLoc: {userLoc, setUserLoc},
@@ -15,6 +17,8 @@ export default ({children}) => {
     merchantId: {merchantId, setMerchantId},
     merchantLoc: {merchantLoc, setMerchantLoc},
     cartList: {cartList, setCartList},
+    token: {token, setToken},
+    user: {user, setUser},
   };
 
   return (

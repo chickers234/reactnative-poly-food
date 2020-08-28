@@ -63,12 +63,12 @@ export default function CartScreen() {
         console.log(error);
       });
 
-      const userRef = database()
-        .ref(`/DonHang/User/${auth().currentUser.uid}`)
-        .push();
-      await userRef.set(gioHangList(userRef.key)).catch((error) => {
-        console.log(error);
-      });
+      await database()
+        .ref(`/DonHang/User/${auth().currentUser.uid}/${merchantRef.key}`)
+        .set(gioHangList(merchantRef.key))
+        .catch((error) => {
+          console.log(error);
+        });
 
       cartList.setCartList([]);
       setData([]);

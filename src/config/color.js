@@ -7,4 +7,9 @@ export default {
   red: '#FF4500',
   yellow: '#FFBF00',
   orange: '#FF8000',
+  green: '#4CAF50',
+  dark: '#172737',
+  lightred: '#F6CECE',
+  lightyellow: '#F5F6CE',
+  lightgreen: '#CEF6CE',
 };

@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 import {useNavigation} from '@react-navigation/native';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -15,27 +16,53 @@ import common from '../themes/common';
 
 export default function PhoneSignIn() {
   const [confirm, setConfirm] = useState(null);
-  const [number, setNumber] = useState(null);
+  const [number, setNumber] = useState('');
   const [code, setCode] = useState('');
   const navigation = useNavigation();
+
+  const user = () => {
+    let obj = {
+      address: '',
+      birthday: '',
+      email: '',
+      name: '',
+      phonenumber: '',
+      uid: auth().currentUser.uid,
+      token: '',
+    };
+
+    return obj;
+  };
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       if (user) {
         navigation.navigate('Main');
-        setConfirm(null);
-        setNumber('');
-        setCode('');
+        createUser();
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const createUser = async () => {
+    await database()
+      .ref(`/User/${auth().currentUser.uid}`)
+      .set(user())
+      .catch((error) => {
+        console.log(error);
+      });
+
+    setConfirm(null);
+    setNumber('');
+    setCode('');
+  };
 
   const signInWithPhoneNumber = async (phoneNumber) => {
     const confirmation = await auth().signInWithPhoneNumber(
       '+84' + phoneNumber,
     );
     setConfirm(confirmation);
+    createUser();
   };
 
   const confirmCode = async () => {
@@ -136,7 +163,10 @@ const styles = StyleSheet.create({
   section2: {
     flex: 3,
     backgroundColor: colors.yellow,
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
   },
   logo: {
     height: 120,

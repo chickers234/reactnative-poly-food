@@ -3,7 +3,9 @@ import database from '@react-native-firebase/database';
 import React, {useEffect, useState} from 'react';
 import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import {BillItem} from '../components/List';
+import Text from '../components/Text';
 import common from '../themes/common';
+import colors from '../config/color';
 
 const {width, height} = Dimensions.get('window');
 
@@ -12,7 +14,7 @@ const _renderItem = ({item}) => (
 );
 
 export default function BillScreen() {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const onValueChange = database()
@@ -35,16 +37,25 @@ export default function BillScreen() {
         .off('value', onValueChange);
   }, []);
 
+  if (data.length === 0) {
+    return (
+      <View style={styles.container}>
+        <View style={common.header} />
+        <View style={styles.body}>
+          <Text text="Lịch sử giao dịch trống" size={16} color={colors.gray} />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={common.header} />
-      <View style={styles.body}>
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={_renderItem}
-        />
-      </View>
+      <FlatList
+        data={data}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={_renderItem}
+      />
     </View>
   );
 }
@@ -53,6 +64,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   body: {
+    flex: 1,
     padding: width * 0.01,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
