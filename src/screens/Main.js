@@ -39,7 +39,6 @@ export default function MainStack() {
       .ref(`/User/${auth().currentUser.uid}`)
       .on('value', (snapshot) => {
         user.setUser(snapshot.val());
-        console.log(snapshot.val());
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

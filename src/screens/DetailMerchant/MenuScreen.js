@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import {MenuItem} from '../../components/List';
+import MenuHolder from '../../components/Placeholder/MenuHolder';
 import colors from '../../config/color';
 import {StoreContext} from '../../utils/store';
 
@@ -25,6 +26,7 @@ const _renderItem = ({item}) => (
 export const {width, height} = Dimensions.get('window');
 
 export default function MenuScreen() {
+  const [loading, setLoading] = useState(true);
   const [menu, setMenu] = useState([]);
   const {merchantId} = useContext(StoreContext);
   const navigation = useNavigation();
@@ -48,6 +50,7 @@ export default function MenuScreen() {
             });
           });
           setMenu(MenuList);
+          setLoading(false);
         });
 
       // Stop listening for updates when no longer required
@@ -58,13 +61,28 @@ export default function MenuScreen() {
     } catch (error) {}
   }, [merchantId.merchantId]);
 
+  const _renderList = () => {
+    if (loading) {
+      return (
+        <>
+          <MenuHolder />
+        </>
+      );
+    }
+    return (
+      <>
+        <FlatList
+          data={menu}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={_renderItem}
+        />
+      </>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <FlatList
-        data={menu}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={_renderItem}
-      />
+      {_renderList()}
       <Pressable style={styles.buttonAdd} onPress={() => goToCart()}>
         <Text style={styles.add}>Xem giỏ hàng</Text>
       </Pressable>

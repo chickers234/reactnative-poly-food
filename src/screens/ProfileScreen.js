@@ -1,8 +1,9 @@
 import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
 import {useNavigation} from '@react-navigation/native';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Image, Pressable, ScrollView, StyleSheet, View} from 'react-native';
+import {Dialog} from 'react-native-simple-dialogs';
+import ProfileDialog from '../components/Dialog/ProfileDialog';
 import InfoRow from '../components/InfoRow';
 import Text from '../components/Text';
 import colors from '../config/color';
@@ -11,7 +12,12 @@ import {StoreContext} from '../utils/store';
 
 export default function ProfileScreen() {
   const navigation = useNavigation();
-  const {token, user} = useContext(StoreContext);
+  const [dialog, setDialog] = useState(false);
+  const {user} = useContext(StoreContext);
+
+  const hideDialog = () => {
+    setDialog(false);
+  };
 
   const logOut = async () => {
     auth()
@@ -26,6 +32,7 @@ export default function ProfileScreen() {
         },
       );
   };
+
   return (
     <View style={styles.container}>
       <View style={common.header} />
@@ -41,33 +48,34 @@ export default function ProfileScreen() {
           <InfoRow
             image={require('../assets/icons/ic_man.png')}
             title="Họ tên"
-            text={user.name}
+            text={user.user.name}
           />
           <InfoRow
             image={require('../assets/icons/ic_phone.png')}
             title="Số điện thoại"
-            text={user.phonenumber}
+            text={user.user.phonenumber}
           />
           <InfoRow
             image={require('../assets/icons/ic_email.png')}
             title="Email"
-            text={user.email}
+            text={user.user.email}
           />
           <InfoRow
             image={require('../assets/icons/ic_map.png')}
             title="Địa chỉ"
-            text={user.address}
+            text={user.user.address}
           />
           <InfoRow
             image={require('../assets/icons/ic_crown.png')}
             title="Ngày sinh"
-            text={user.birthday}
+            text={user.user.birthday}
           />
           <Pressable
             style={[
               styles.customButton,
               {backgroundColor: colors.yellow, marginTop: 20},
-            ]}>
+            ]}
+            onPress={() => setDialog(true)}>
             <Text text="Cập nhật thông tin" color={colors.white} size={18} />
           </Pressable>
           <Pressable
@@ -77,6 +85,9 @@ export default function ProfileScreen() {
           </Pressable>
         </ScrollView>
       </View>
+      <Dialog visible={dialog} title="" onTouchOutside={() => setDialog(false)}>
+        <ProfileDialog hideDialog={hideDialog} />
+      </Dialog>
     </View>
   );
 }
@@ -92,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   body: {
-    flex: 2.5,
+    flex: 3,
     padding: 10,
   },
   customButton: {

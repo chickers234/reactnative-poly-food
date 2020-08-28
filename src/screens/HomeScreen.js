@@ -17,6 +17,7 @@ import {SwiperList} from '../components/Swiper';
 import CategoryList from '../data/CategoryList';
 import * as helper from '../utils/helper';
 import {StoreContext} from '../utils/store';
+import MerchantHolder from '../components/Placeholder/MerchantHolder';
 
 const _renderItemCategoty = ({item}) => (
   <CategoryItem icon={item.icon} title={item.title} tag={item.tag} />
@@ -39,6 +40,7 @@ const _renderItemMerchant = ({item}) => (
 export const {width, height} = Dimensions.get('window');
 
 export default function HomeScreen() {
+  const [loading, setLoading] = useState(true);
   const [latitude, setLat] = useState('');
   const [longitude, setLong] = useState('');
   const [data, setData] = useState([]);
@@ -76,10 +78,10 @@ export default function HomeScreen() {
   }, []);
 
   useEffect(() => {
-    let MerchantList = [];
     const onValueChange = database()
       .ref('/CuaHang')
       .on('value', (snapshot) => {
+        let MerchantList = [];
         snapshot.forEach((child) => {
           let dis = getDistance(
             {latitude: latitude, longitude: longitude},
@@ -99,11 +101,31 @@ export default function HomeScreen() {
           }
         });
         setData(helper.sortByDistance(MerchantList));
+        setLoading(false);
       });
 
     // Stop listening for updates when no longer required
     return () => database().ref('/CuaHang').off('value', onValueChange);
   }, [data, latitude, longitude]);
+
+  const _renderList = () => {
+    if (loading) {
+      return (
+        <>
+          <MerchantHolder />
+        </>
+      );
+    }
+    return (
+      <>
+        <FlatList
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={_renderItemMerchant}
+        />
+      </>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -129,11 +151,7 @@ export default function HomeScreen() {
           Món ăn gần bạn
         </Text>
 
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={_renderItemMerchant}
-        />
+        {_renderList()}
       </View>
     </View>
   );

@@ -1,7 +1,16 @@
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+} from 'react-native';
 import {CartItem} from '../components/List';
 import Title from '../components/Text';
 import colors from '../config/color';
@@ -19,8 +28,8 @@ const _renderItem = ({item}) => (
 );
 
 export default function CartScreen() {
-  const {userPos} = useContext(StoreContext);
-  const {cartList} = useContext(StoreContext);
+  const navigation = useNavigation();
+  const {userPos, cartList, user} = useContext(StoreContext);
   const [data, setData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -42,8 +51,8 @@ export default function CartScreen() {
       id: key,
       address: userPos.userPos,
       macuahang: cartList.cartList[0].macuahang,
-      name: 'Tai',
-      phonenumber: '0903997981',
+      name: user.name,
+      phonenumber: user.phonenumber,
       status: 'Chờ xử lý',
       time: helper.getNow(),
       total: totalPrice,
@@ -54,27 +63,71 @@ export default function CartScreen() {
     return obj;
   };
 
-  const submit = async () => {
-    try {
-      const merchantRef = database()
-        .ref(`/DonHang/CuaHang/${cartList.cartList[0].macuahang}`)
-        .push();
-      await merchantRef.set(gioHangList(merchantRef.key)).catch((error) => {
-        console.log(error);
-      });
+  const submit = () => {
+    if (user.user.name === '' && user.user.phonenumber === '') {
+      Alert.alert(
+        'Thông báo',
+        'Vui lòng cập nhật đầy đủ thông tin trước khi giao dịch. Bạn có muốn tiếp tục?',
+        [
+          {
+            text: 'Đồng ý',
+            onPress: () => {
+              navigation.navigate('ProfileScreen');
+            },
+          },
+          {
+            text: 'Huỷ',
+            onPress: () => console.log('Huỷ'),
+            style: 'cancel',
+          },
+        ],
+        {cancelable: true},
+      );
+    } else {
+      Alert.alert(
+        'Thông báo',
+        'Xác nhận thanh toán đơn hàng. Bạn có muốn tiếp tục?',
+        [
+          {
+            text: 'Đồng ý',
+            onPress: async () => {
+              try {
+                const merchantRef = database()
+                  .ref(`/DonHang/CuaHang/${cartList.cartList[0].macuahang}`)
+                  .push();
+                await merchantRef
+                  .set(gioHangList(merchantRef.key))
+                  .catch((error) => {
+                    console.log(error);
+                  });
 
-      await database()
-        .ref(`/DonHang/User/${auth().currentUser.uid}/${merchantRef.key}`)
-        .set(gioHangList(merchantRef.key))
-        .catch((error) => {
-          console.log(error);
-        });
+                await database()
+                  .ref(
+                    `/DonHang/User/${auth().currentUser.uid}/${
+                      merchantRef.key
+                    }`,
+                  )
+                  .set(gioHangList(merchantRef.key))
+                  .catch((error) => {
+                    console.log(error);
+                  });
 
-      cartList.setCartList([]);
-      setData([]);
-      setTotalPrice(0);
-    } catch (error) {
-      alert('Giỏ hàng trống!');
+                cartList.setCartList([]);
+                setData([]);
+                setTotalPrice(0);
+              } catch (error) {
+                alert('Giỏ hàng trống!');
+              }
+            },
+          },
+          {
+            text: 'Huỷ',
+            onPress: () => console.log('Huỷ'),
+            style: 'cancel',
+          },
+        ],
+        {cancelable: true},
+      );
     }
   };
 
@@ -91,7 +144,6 @@ export default function CartScreen() {
           <Text style={common.subtitle}>{userPos.userPos}</Text>
         </View>
       </View>
-
       <View style={[styles.section, {flex: 9}]}>
         <Title text="Chi tiết đơn hàng" fontFamily="regular" size={18} />
         <FlatList
@@ -100,7 +152,6 @@ export default function CartScreen() {
           renderItem={_renderItem}
         />
       </View>
-
       <View
         style={{
           flex: 0.6,
@@ -122,7 +173,6 @@ export default function CartScreen() {
           size={18}
         />
       </View>
-
       <Pressable
         style={[
           styles.section,
