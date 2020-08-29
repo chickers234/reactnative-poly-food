@@ -73,11 +73,7 @@ export default function DetailBillScreen({route}) {
           <Text text={merchant.diachi} />
           <Text text={'Mã đơn hàng: ' + bill.id} />
           <View style={styles.line} />
-          <Text
-            text={'Trạng thái đơn hàng: ' + bill.status}
-            size={14}
-            color={colors.red}
-          />
+          <Text text={'Trạng thái đơn hàng: ' + bill.status} size={14} />
         </View>
         <View style={[styles.section, {flex: 1}]}>
           <Text text="Thông tin nhận hàng" size={16} fontFamily="bold" />
