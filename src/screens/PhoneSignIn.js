@@ -23,6 +23,9 @@ export default function PhoneSignIn() {
     auth().onAuthStateChanged((user) => {
       if (user) {
         navigation.navigate('Main');
+        setConfirm(null);
+        setNumber('');
+        setCode('');
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

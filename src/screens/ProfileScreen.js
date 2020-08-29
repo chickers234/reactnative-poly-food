@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
 import React, {useContext, useState} from 'react';
 import {Image, Pressable, ScrollView, StyleSheet, View} from 'react-native';
+import RNRestart from 'react-native-restart';
 import {Dialog} from 'react-native-simple-dialogs';
 import ProfileDialog from '../components/Dialog/ProfileDialog';
 import InfoRow from '../components/InfoRow';
@@ -9,9 +9,7 @@ import Text from '../components/Text';
 import colors from '../config/color';
 import common from '../themes/common';
 import {StoreContext} from '../utils/store';
-
 export default function ProfileScreen() {
-  const navigation = useNavigation();
   const [dialog, setDialog] = useState(false);
   const {user} = useContext(StoreContext);
 
@@ -24,8 +22,7 @@ export default function ProfileScreen() {
       .signOut()
       .then(
         () => {
-          console.log('Signed Out');
-          navigation.navigate('PhoneSignIn');
+          RNRestart.Restart();
         },
         (error) => {
           console.error('Sign Out Error', error);
