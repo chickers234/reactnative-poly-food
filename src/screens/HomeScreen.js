@@ -1,23 +1,27 @@
 import database from '@react-native-firebase/database';
+import RNRestart from 'react-native-restart';
 import {getDistance} from 'geolib';
 import React, {useContext, useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
   Platform,
+  Pressable,
   StatusBar,
+  Image,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import GetLocation from 'react-native-get-location';
+import LocationServicesDialogBox from 'react-native-android-location-services-dialog-box';
 import Geocoder from 'react-native-geocoding';
+import GetLocation from 'react-native-get-location';
 import {CategoryItem, MerchantItem} from '../components/List';
+import MerchantHolder from '../components/Placeholder/MerchantHolder';
 import {SwiperList} from '../components/Swiper';
 import CategoryList from '../data/CategoryList';
 import * as helper from '../utils/helper';
 import {StoreContext} from '../utils/store';
-import MerchantHolder from '../components/Placeholder/MerchantHolder';
 
 const _renderItemCategoty = ({item}) => (
   <CategoryItem icon={item.icon} title={item.title} tag={item.tag} />
@@ -46,6 +50,21 @@ export default function HomeScreen() {
   const [data, setData] = useState([]);
   const {userLoc, userPos} = useContext(StoreContext);
   const numColumns = 4;
+
+  useEffect(() => {
+    LocationServicesDialogBox.checkLocationServicesIsEnabled({
+      message:
+        '<h2>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location',
+      ok: 'YES',
+      cancel: 'NO',
+      preventOutSideTouch: false,
+      providerListener: false,
+    })
+      .then()
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, []);
 
   useEffect(() => {
     GetLocation.getCurrentPosition({
@@ -115,16 +134,34 @@ export default function HomeScreen() {
           <MerchantHolder />
         </>
       );
+    } else {
+      if (data.length !== 0) {
+        return (
+          <>
+            <FlatList
+              data={data}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={_renderItemMerchant}
+            />
+          </>
+        );
+      }
+      return (
+        <View
+          style={{
+            height: height * 0.35,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Pressable onPress={() => RNRestart.Restart()}>
+            <Image
+              style={styles.reloadIcon}
+              source={require('../assets/icons/ic_reload.png')}
+            />
+          </Pressable>
+        </View>
+      );
     }
-    return (
-      <>
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={_renderItemMerchant}
-        />
-      </>
-    );
   };
 
   return (
@@ -165,5 +202,9 @@ const styles = StyleSheet.create({
     padding: width * 0.01,
     height: height * 0.55,
     paddingBottom: Platform.OS === 'ios' ? 100 : 70,
+  },
+  reloadIcon: {
+    height: 35,
+    width: 35,
   },
 });

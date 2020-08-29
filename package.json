@@ -25,6 +25,7 @@
     "moment": "^2.27.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-android-location-services-dialog-box": "^2.8.2",
     "react-native-fast-image": "^8.3.2",
     "react-native-geocoding": "^0.4.0",
     "react-native-gesture-handler": "^1.7.0",
