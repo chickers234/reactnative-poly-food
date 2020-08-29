@@ -1,5 +1,4 @@
 import database from '@react-native-firebase/database';
-import RNRestart from 'react-native-restart';
 import {getDistance} from 'geolib';
 import React, {useContext, useEffect, useState} from 'react';
 import {
@@ -13,7 +12,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import LocationServicesDialogBox from 'react-native-android-location-services-dialog-box';
 import Geocoder from 'react-native-geocoding';
 import GetLocation from 'react-native-get-location';
 import {CategoryItem, MerchantItem} from '../components/List';
@@ -52,21 +50,6 @@ export default function HomeScreen() {
   const numColumns = 4;
 
   useEffect(() => {
-    LocationServicesDialogBox.checkLocationServicesIsEnabled({
-      message:
-        '<h2>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location',
-      ok: 'YES',
-      cancel: 'NO',
-      preventOutSideTouch: false,
-      providerListener: false,
-    })
-      .then()
-      .catch((error) => {
-        console.log(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
       timeout: 15000,
@@ -76,7 +59,6 @@ export default function HomeScreen() {
         setLat(location.latitude);
         setLong(location.longitude);
         userLoc.setUserLoc({lat: location.latitude, long: location.longitude});
-        //console.log('lat: ' + latitude + ' - long: ' + longitude);
 
         Geocoder.init('AIzaSyAI5He5yXpm2806AgEH3Mvy_aQk4hfzxV4', {
           language: 'vi',
@@ -92,7 +74,6 @@ export default function HomeScreen() {
         const {code, message} = error;
         console.warn(code, message);
       });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -153,7 +134,7 @@ export default function HomeScreen() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Pressable onPress={() => RNRestart.Restart()}>
+          <Pressable>
             <Image
               style={styles.reloadIcon}
               source={require('../assets/icons/ic_reload.png')}

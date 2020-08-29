@@ -22,10 +22,10 @@ export default function PhoneSignIn() {
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate('Main');
-        setConfirm(null);
-        setNumber('');
-        setCode('');
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Main'}],
+        });
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

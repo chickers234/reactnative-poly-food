@@ -16,8 +16,10 @@ import ProfileScreen from './ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
-const userRef = () => {
-  let obj = {
+export default function MainStack() {
+  const {token, user} = useContext(StoreContext);
+
+  const userRef = {
     address: '',
     birthday: '',
     email: '',
@@ -26,20 +28,15 @@ const userRef = () => {
     uid: auth().currentUser.uid,
     token: '',
   };
-  return obj;
-};
 
-const createUser = () => {
-  database()
-    .ref(`/User/${auth().currentUser.uid}`)
-    .set(userRef())
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
-export default function MainStack() {
-  const {token, user} = useContext(StoreContext);
+  const createUser = () => {
+    database()
+      .ref(`/User/${auth().currentUser.uid}`)
+      .set(userRef)
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
@@ -65,7 +62,7 @@ export default function MainStack() {
             user.setUser(snapshot.val());
           } else {
             createUser();
-            user.setUser(userRef());
+            user.setUser(userRef);
           }
         });
     } catch (error) {

@@ -4,8 +4,8 @@ import React, {useEffect, useState} from 'react';
 import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import {BillItem} from '../components/List';
 import Text from '../components/Text';
-import common from '../themes/common';
 import colors from '../config/color';
+import common from '../themes/common';
 
 const {width, height} = Dimensions.get('window');
 

@@ -35,6 +35,17 @@ export default function CategoryScreen({route}) {
         .on('value', (snapshot) => {
           let MerchantList = [];
           snapshot.forEach((child) => {
+            let merchantItem = {
+              id: child.val().macuahang,
+              image: child.val().hinhanh,
+              name: child.val().tencuahang,
+              address: child.val().diachi,
+              rating: child.val().rating,
+              lat: child.val().latitude,
+              long: child.val().longitude,
+              dis: helper.getDistance(dis),
+            };
+
             let dis = getDistance(
               {latitude: userLoc.userLoc.lat, longitude: userLoc.userLoc.long},
               {
@@ -43,28 +54,10 @@ export default function CategoryScreen({route}) {
               },
             );
             if (tag === 'TL08') {
-              MerchantList.push({
-                id: child.val().macuahang,
-                image: child.val().hinhanh,
-                name: child.val().tencuahang,
-                address: child.val().diachi,
-                rating: child.val().rating,
-                lat: child.val().latitude,
-                long: child.val().longitude,
-                dis: helper.getDistance(dis),
-              });
+              MerchantList.push(merchantItem);
             } else {
               if (child.val().matheloai === tag) {
-                MerchantList.push({
-                  id: child.val().macuahang,
-                  image: child.val().hinhanh,
-                  name: child.val().tencuahang,
-                  address: child.val().diachi,
-                  rating: child.val().rating,
-                  lat: child.val().latitude,
-                  long: child.val().longitude,
-                  dis: helper.getDistance(dis),
-                });
+                MerchantList.push(merchantItem);
               }
             }
           });
