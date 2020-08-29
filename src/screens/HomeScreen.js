@@ -2,18 +2,20 @@ import database from '@react-native-firebase/database';
 import {getDistance} from 'geolib';
 import React, {useContext, useEffect, useState} from 'react';
 import {
+  Alert,
   Dimensions,
   FlatList,
+  Image,
   Platform,
   Pressable,
   StatusBar,
-  Image,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import GetLocation from 'react-native-get-location';
+import RNRestart from 'react-native-restart';
 import {CategoryItem, MerchantItem} from '../components/List';
 import MerchantHolder from '../components/Placeholder/MerchantHolder';
 import {SwiperList} from '../components/Swiper';
@@ -66,13 +68,23 @@ export default function HomeScreen() {
         Geocoder.from(location.latitude, location.longitude)
           .then((json) => {
             userPos.setUserPos(json.results[0].formatted_address);
-            //console.log(json.results[0].formatted_address);
+            console.log(json.results[0].formatted_address);
           })
           .catch((error) => console.log(error));
       })
       .catch((error) => {
-        const {code, message} = error;
-        console.warn(code, message);
+        console.log(error.message);
+        Alert.alert(
+          'Thông báo',
+          'Ứng dụng yêu cầu chia sẻ vị trí của bạn để tiếp tục.',
+          [
+            {
+              text: 'Đồng ý',
+              onPress: () => {},
+            },
+          ],
+          {cancelable: true},
+        );
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -134,7 +146,7 @@ export default function HomeScreen() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Pressable>
+          <Pressable onPress={() => RNRestart.Restart()}>
             <Image
               style={styles.reloadIcon}
               source={require('../assets/icons/ic_reload.png')}
@@ -185,7 +197,7 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.OS === 'ios' ? 100 : 70,
   },
   reloadIcon: {
-    height: 35,
-    width: 35,
+    height: 30,
+    width: 30,
   },
 });
