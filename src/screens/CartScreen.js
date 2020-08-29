@@ -64,7 +64,7 @@ export default function CartScreen() {
   };
 
   const submit = () => {
-    if (user.user.name === '' && user.user.phonenumber === '') {
+    if (user.user.name === '' || user.user.phonenumber === '') {
       Alert.alert(
         'Thông báo',
         'Vui lòng cập nhật đầy đủ thông tin trước khi giao dịch. Bạn có muốn tiếp tục?',

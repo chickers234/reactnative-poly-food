@@ -1,6 +1,6 @@
-import messaging from '@react-native-firebase/messaging';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
+import messaging from '@react-native-firebase/messaging';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React, {useContext, useEffect} from 'react';
 import {Alert} from 'react-native';
@@ -15,6 +15,28 @@ import HomeScreen from './HomeScreen';
 import ProfileScreen from './ProfileScreen';
 
 const Tab = createBottomTabNavigator();
+
+const userRef = () => {
+  let obj = {
+    address: '',
+    birthday: '',
+    email: '',
+    name: '',
+    phonenumber: '',
+    uid: auth().currentUser.uid,
+    token: '',
+  };
+  return obj;
+};
+
+const createUser = () => {
+  database()
+    .ref(`/User/${auth().currentUser.uid}`)
+    .set(userRef())
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 export default function MainStack() {
   const {token, user} = useContext(StoreContext);
@@ -35,12 +57,20 @@ export default function MainStack() {
   }, []);
 
   useEffect(() => {
-    database()
-      .ref(`/User/${auth().currentUser.uid}`)
-      .on('value', (snapshot) => {
-        user.setUser(snapshot.val());
-      });
-
+    try {
+      database()
+        .ref(`/User/${auth().currentUser.uid}`)
+        .on('value', (snapshot) => {
+          if (snapshot.val() !== null) {
+            user.setUser(snapshot.val());
+          } else {
+            createUser();
+            user.setUser(userRef());
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

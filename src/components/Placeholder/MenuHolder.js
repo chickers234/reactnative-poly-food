@@ -49,6 +49,13 @@ export default function MenuHolder() {
             <View style={styles.block2} />
           </View>
         </View>
+
+        <View style={styles.container}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={styles.block1} />
+            <View style={styles.block2} />
+          </View>
+        </View>
       </SkeletonPlaceholder>
     </View>
   );
