@@ -82,7 +82,11 @@ export default function ProfileScreen() {
           </Pressable>
         </ScrollView>
       </View>
-      <Dialog visible={dialog} title="" onTouchOutside={() => setDialog(false)}>
+      <Dialog
+        contentStyle={styles.dialog}
+        visible={dialog}
+        title=""
+        onTouchOutside={() => setDialog(false)}>
         <ProfileDialog hideDialog={hideDialog} />
       </Dialog>
     </View>
@@ -104,14 +108,17 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   customButton: {
-    height: 45,
-    borderRadius: 20,
+    height: 44,
+    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
   },
   avatar: {
-    height: 140,
-    width: 140,
+    height: 130,
+    width: 130,
+  },
+  dialog: {
+    padding: 0,
   },
 });

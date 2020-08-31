@@ -1,15 +1,16 @@
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
-import React, {useContext, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import React, {useContext, useEffect, useState} from 'react';
 import {
+  Alert,
+  Dimensions,
   FlatList,
   Image,
   Pressable,
   StyleSheet,
   Text,
   View,
-  Alert,
 } from 'react-native';
 import {CartItem} from '../components/List';
 import Title from '../components/Text';
@@ -17,6 +18,8 @@ import colors from '../config/color';
 import common from '../themes/common';
 import * as helper from '../utils/helper';
 import {StoreContext} from '../utils/store';
+
+export const {width, height} = Dimensions.get('window');
 
 const _renderItem = ({item}) => (
   <CartItem
@@ -131,6 +134,31 @@ export default function CartScreen() {
     }
   };
 
+  const renderCartView = () => {
+    if (cartList.cartList.length === 0) {
+      return (
+        <>
+          <Title text="Chi tiết đơn hàng" fontFamily="regular" size={18} />
+          <Image
+            style={styles.cart}
+            source={require('../assets/icons/cart_empty.png')}
+            resizeMode="contain"
+          />
+        </>
+      );
+    }
+    return (
+      <>
+        <Title text="Chi tiết đơn hàng" fontFamily="regular" size={18} />
+        <FlatList
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={_renderItem}
+        />
+      </>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={common.header} />
@@ -144,14 +172,7 @@ export default function CartScreen() {
           <Text style={common.subtitle}>{userPos.userPos}</Text>
         </View>
       </View>
-      <View style={[styles.section, {flex: 9}]}>
-        <Title text="Chi tiết đơn hàng" fontFamily="regular" size={18} />
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={_renderItem}
-        />
-      </View>
+      <View style={[styles.section, {flex: 9}]}>{renderCartView()}</View>
       <View
         style={{
           flex: 0.6,
@@ -225,5 +246,12 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     marginRight: 10,
+  },
+  cart: {
+    height: height * 0.2,
+    width: height * 0.2,
+    alignSelf: 'center',
+    marginTop: height * 0.15,
+    opacity: 0.1,
   },
 });

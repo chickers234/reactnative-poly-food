@@ -35,34 +35,36 @@ export default function ProfileDialog({hideDialog}) {
           source={require('../../assets/icons/SuBeeTeam.png')}
         />
       </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        onChangeText={(text) => setName(text)}
-        value={name}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        onChangeText={(text) => setPhonenumber(text)}
-        value={phonenumber}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Address"
-        onChangeText={(text) => setAddress(text)}
-        value={address}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-      />
-      <View style={styles.line} />
-      <Pressable style={styles.customButton} onPress={() => updateUser()}>
-        <Text text="Xác nhận" color={colors.white} size={16} />
-      </Pressable>
+      <View style={styles.body}>
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          onChangeText={(text) => setName(text)}
+          value={name}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Phone Number"
+          onChangeText={(text) => setPhonenumber(text)}
+          value={phonenumber}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Address"
+          onChangeText={(text) => setAddress(text)}
+          value={address}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+        />
+        <View style={styles.line} />
+        <Pressable style={styles.customButton} onPress={() => updateUser()}>
+          <Text text="Xác nhận" color={colors.white} size={16} />
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -72,12 +74,16 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: colors.yellow,
     alignItems: 'center',
-    padding: 10,
-    marginBottom: 15,
+    padding: 20,
+    marginBottom: 10,
+    marginTop: -20,
   },
   avatar: {
     height: 110,
     width: 110,
+  },
+  body: {
+    padding: 10,
   },
   input: {
     height: 40,
