@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import DetailBillScreen from '../screens//DetailBillScreen';
+import DetailBillScreen from '../screens/DetailBillScreen';
 import CategoryScreen from '../screens/CategoryScreen';
 import DetailMerchantScreen from '../screens/DetailMerchantScreen';
 import Main from '../screens/Main';

@@ -41,10 +41,10 @@ export default function CartScreen() {
     getTotal(cartList.cartList);
   }, [cartList.cartList]);
 
-  const getTotal = (data) => {
+  const getTotal = (list) => {
     let total = 0;
-    for (let i = 0; i < data.length; i++) {
-      total += data[i].soluong * data[i].gia;
+    for (let i = 0; i < list.length; i++) {
+      total += list[i].soluong * list[i].gia;
     }
     setTotalPrice(total);
   };
@@ -173,14 +173,7 @@ export default function CartScreen() {
         </View>
       </View>
       <View style={[styles.section, {flex: 9}]}>{renderCartView()}</View>
-      <View
-        style={{
-          flex: 0.6,
-          width: '95%',
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-          alignSelf: 'center',
-        }}>
+      <View style={styles.footer}>
         <Title
           text="Tổng hoá đơn:"
           color={colors.black}
@@ -235,6 +228,13 @@ const styles = StyleSheet.create({
     flex: 2,
     margin: 5,
     padding: 10,
+  },
+  footer: {
+    flex: 0.6,
+    width: '95%',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignSelf: 'center',
   },
   row: {
     alignItems: 'center',

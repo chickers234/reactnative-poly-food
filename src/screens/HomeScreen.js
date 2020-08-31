@@ -140,12 +140,7 @@ export default function HomeScreen() {
         );
       }
       return (
-        <View
-          style={{
-            height: height * 0.35,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        <View style={styles.emptyCart}>
           <Pressable onPress={() => RNRestart.Restart()}>
             <Image
               style={styles.reloadIcon}
@@ -199,5 +194,10 @@ const styles = StyleSheet.create({
   reloadIcon: {
     height: 30,
     width: 30,
+  },
+  emptyCart: {
+    height: height * 0.35,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
