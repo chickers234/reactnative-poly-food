@@ -32,7 +32,7 @@ export default function SearchBar({goTo, tag, backTo}) {
         }}>
         <Pressable onPress={() => navigation.navigate(backTo)}>
           <View style={styles.icon}>
-            <Ionicons name="ios-arrow-back-sharp" color="#172737" size={35} />
+            <Ionicons name="ios-arrow-back-sharp" color="white" size={35} />
           </View>
         </Pressable>
 
