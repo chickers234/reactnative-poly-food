@@ -21,6 +21,7 @@ export default function MenuItem({id, image, name, price}) {
   const [count, setCount] = useState(1);
   const [total, setTotal] = useState(price);
   const {merchantId, cartList} = useContext(StoreContext);
+  const {settingApp} = useContext(StoreContext);
 
   const add = () => {
     setCount(count + 1);
@@ -110,7 +111,7 @@ export default function MenuItem({id, image, name, price}) {
             style={[
               styles.subtitle,
               {
-                color: colors.red,
+                color: settingApp.settingApp.color,
                 fontSize: 12,
                 borderColor: colors.gray,
               },

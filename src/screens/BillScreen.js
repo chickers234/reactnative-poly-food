@@ -1,11 +1,11 @@
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import {BillItem} from '../components/List';
 import Text from '../components/Text';
 import colors from '../config/color';
-import common from '../themes/common';
+import {StoreContext} from '../utils/store';
 
 const {width, height} = Dimensions.get('window');
 
@@ -15,6 +15,7 @@ const _renderItem = ({item}) => (
 
 export default function BillScreen() {
   const [data, setData] = useState([]);
+  const {settingApp} = useContext(StoreContext);
 
   useEffect(() => {
     const onValueChange = database()
@@ -40,7 +41,9 @@ export default function BillScreen() {
   if (data.length === 0) {
     return (
       <View style={styles.container}>
-        <View style={common.header} />
+        <View
+          style={{backgroundColor: settingApp.settingApp.color, height: 40}}
+        />
         <View style={styles.body}>
           <Text text="Lịch sử giao dịch trống" size={16} color={colors.gray} />
         </View>
@@ -50,7 +53,9 @@ export default function BillScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={common.header} />
+      <View
+        style={{backgroundColor: settingApp.settingApp.color, height: 40}}
+      />
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}

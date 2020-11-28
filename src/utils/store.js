@@ -10,6 +10,7 @@ export default ({children}) => {
   const [cartList, setCartList] = useState([]);
   const [token, setToken] = useState('');
   const [user, setUser] = useState({});
+  const [settingApp, setSettingApp] = useState({});
 
   const store = {
     userLoc: {userLoc, setUserLoc},
@@ -19,6 +20,7 @@ export default ({children}) => {
     cartList: {cartList, setCartList},
     token: {token, setToken},
     user: {user, setUser},
+    settingApp: {settingApp, setSettingApp},
   };
 
   return (

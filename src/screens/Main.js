@@ -21,6 +21,7 @@ export default function MainStack() {
   const navigation = useNavigation();
   const {token, user} = useContext(StoreContext);
   const [Popup, setPopup] = useState('');
+  const {settingApp} = useContext(StoreContext);
 
   const userRef = {
     address: '',
@@ -115,7 +116,7 @@ export default function MainStack() {
     <Tab.Navigator
       initialRouteName="HomeScreen"
       tabBarOptions={{
-        activeTintColor: '#FF4500',
+        activeTintColor: settingApp.settingApp.color,
         inactiveTintColor: '#BDBDBD',
       }}>
       <Tab.Screen

@@ -1,14 +1,16 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext,useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import {StoreContext} from '../../utils/store';
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
   const [time, setTime] = useState(5);
   const [image, setImage] = useState('');
+  const {settingApp} = useContext(StoreContext);
 
   useEffect(() => {
     const onValueChange = database()
@@ -18,6 +20,16 @@ const WelcomeScreen = () => {
       });
 
     return () => database().ref('/Banner/Wellcome').off('value', onValueChange);
+  }, []);
+
+  useEffect(() => {
+    const onValueChange = database()
+      .ref('/Mamau')
+      .on('value', (snapshot) => {
+        settingApp.setSettingApp(snapshot.val());
+      });
+
+    return () => database().ref('/Mamau').off('value', onValueChange);
   }, []);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Dimensions,
   Image,
@@ -13,12 +13,14 @@ import colors from '../config/color';
 import MapScreen from '../screens/DetailMerchant/MapScreen';
 import MenuScreen from '../screens/DetailMerchant/MenuScreen';
 import common from '../themes/common';
+import {StoreContext} from '../utils/store';
 
 const Tab = createMaterialTopTabNavigator();
 const {width, height} = Dimensions.get('window');
 
 export default function DetailMerchantScreen({route, navigation}) {
   const {id, image, name, address} = route.params;
+  const {settingApp} = useContext(StoreContext);
 
   return (
     <View style={styles.container}>
@@ -56,7 +58,7 @@ export default function DetailMerchantScreen({route, navigation}) {
             color: colors.black,
           },
           tabStyle: {width: width * 0.5},
-          style: {backgroundColor: colors.yellow},
+          style: {backgroundColor: settingApp.settingApp.color},
         }}>
         <Tab.Screen name="Thực đơn" component={MenuScreen} />
         <Tab.Screen name="Bản đồ" component={MapScreen} />

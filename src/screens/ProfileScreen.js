@@ -7,11 +7,11 @@ import ProfileDialog from '../components/Dialog/ProfileDialog';
 import InfoRow from '../components/InfoRow';
 import Text from '../components/Text';
 import colors from '../config/color';
-import common from '../themes/common';
 import {StoreContext} from '../utils/store';
+
 export default function ProfileScreen() {
   const [dialog, setDialog] = useState(false);
-  const {user} = useContext(StoreContext);
+  const {user, settingApp} = useContext(StoreContext);
 
   const hideDialog = () => {
     setDialog(false);
@@ -32,8 +32,14 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={common.header} />
-      <View style={styles.header}>
+      <View
+        style={{backgroundColor: settingApp.settingApp.color, height: 40}}
+      />
+      <View
+        style={{
+          ...styles.header,
+          backgroundColor: settingApp.settingApp.color,
+        }}>
         <Image
           style={styles.avatar}
           source={require('../assets/icons/SuBeeTeam.png')}
@@ -70,7 +76,7 @@ export default function ProfileScreen() {
           <Pressable
             style={[
               styles.customButton,
-              {backgroundColor: colors.yellow, marginTop: 20},
+              {backgroundColor: settingApp.settingApp.color, marginTop: 20},
             ]}
             onPress={() => setDialog(true)}>
             <Text text="Cập nhật thông tin" color={colors.white} size={18} />
@@ -99,7 +105,6 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    backgroundColor: colors.yellow,
     justifyContent: 'center',
     alignItems: 'center',
   },

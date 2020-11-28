@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useContext,useState} from 'react';
 import {
   Platform,
   Pressable,
@@ -11,12 +11,17 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {StoreContext} from '../utils/store';
 
 export default function SearchBar({goTo, tag, backTo}) {
   const navigation = useNavigation();
   const [query, onChangeText] = useState('');
+  const {settingApp} = useContext(StoreContext);
+
   return (
-    <LinearGradient colors={['#FFBF00', '#FFBF00']} style={styles.container}>
+    <LinearGradient
+      colors={[settingApp.settingApp.color, settingApp.settingApp.color]}
+      style={styles.container}>
       <StatusBar
         translucent={true}
         backgroundColor={'transparent'}

@@ -28,7 +28,7 @@ export const {width, height} = Dimensions.get('window');
 export default function MenuScreen() {
   const [loading, setLoading] = useState(true);
   const [menu, setMenu] = useState([]);
-  const {merchantId} = useContext(StoreContext);
+  const {merchantId, settingApp} = useContext(StoreContext);
   const navigation = useNavigation();
 
   const goToCart = () => {
@@ -83,7 +83,9 @@ export default function MenuScreen() {
   return (
     <View style={styles.container}>
       {_renderList()}
-      <Pressable style={styles.buttonAdd} onPress={() => goToCart()}>
+      <Pressable
+        style={{...styles.buttonAdd, backgroundColor: settingApp.settingApp.color}}
+        onPress={() => goToCart()}>
         <Text style={styles.add}>Xem giỏ hàng</Text>
       </Pressable>
     </View>
@@ -102,11 +104,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     margin: 20,
-    backgroundColor: colors.black,
     borderRadius: 5,
   },
   add: {
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Medium',
     fontSize: 16,
     color: colors.white,
   },

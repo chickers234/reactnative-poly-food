@@ -1,14 +1,14 @@
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Dimensions, FlatList, Pressable, StyleSheet, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CartItem} from '../components/List';
 import Text from '../components/Text';
 import colors from '../config/color';
-import common from '../themes/common';
 import * as helper from '../utils/helper';
+import {StoreContext} from '../utils/store';
 
 export const {width, height} = Dimensions.get('window');
 
@@ -26,6 +26,7 @@ export default function DetailBillScreen({route}) {
   const navigation = useNavigation();
   const [bill, setBill] = useState({});
   const [merchant, setMerchant] = useState();
+  const {settingApp} = useContext(StoreContext);
 
   useEffect(() => {
     const getData = async () => {
@@ -60,7 +61,7 @@ export default function DetailBillScreen({route}) {
   }
   return (
     <View style={styles.container}>
-      <View style={common.header} />
+      <View style={{backgroundColor: settingApp.settingApp.color, height: 40}} />
       <View style={styles.body}>
         <View style={{flexDirection: 'row', height: 45, alignItems: 'center'}}>
           <Pressable onPress={() => navigation.goBack()}>

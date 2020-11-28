@@ -32,7 +32,7 @@ const _renderItem = ({item}) => (
 
 export default function CartScreen() {
   const navigation = useNavigation();
-  const {userPos, cartList, user} = useContext(StoreContext);
+  const {userPos, cartList, user, settingApp} = useContext(StoreContext);
   const [data, setData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -161,7 +161,12 @@ export default function CartScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={common.header} />
+      <View
+        style={{
+          backgroundColor: settingApp.settingApp.color,
+          height: 40,
+        }}
+      />
       <View style={[styles.section, {flex: 1.5}]}>
         <Title text="Địa điểm giao hàng" fontFamily="regular" size={18} />
         <View style={styles.row}>
@@ -200,7 +205,7 @@ export default function CartScreen() {
         onPress={() => submit()}>
         <Title
           text={'Đặt Đơn'}
-          color="#FFBF00"
+          color="white"
           fontFamily="regular"
           size={18}
         />

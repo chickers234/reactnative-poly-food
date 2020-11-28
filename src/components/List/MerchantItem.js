@@ -27,7 +27,7 @@ export default function MerchantItem({
   goTo,
 }) {
   const navigation = useNavigation();
-  const {merchantId, merchantLoc} = useContext(StoreContext);
+  const {merchantId, merchantLoc, settingApp} = useContext(StoreContext);
 
   return (
     <Pressable
@@ -79,7 +79,7 @@ export default function MerchantItem({
             style={[
               styles.subtitle,
               {
-                color: colors.red,
+                color: settingApp.settingApp.color,
                 fontSize: 12,
                 borderColor: colors.gray,
               },
