@@ -1,8 +1,9 @@
 import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import messaging from '@react-native-firebase/messaging';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -17,7 +18,9 @@ import ProfileScreen from './ProfileScreen';
 const Tab = createBottomTabNavigator();
 
 export default function MainStack() {
+  const navigation = useNavigation();
   const {token, user} = useContext(StoreContext);
+  const [Popup, setPopup] = useState('');
 
   const userRef = {
     address: '',
@@ -70,6 +73,20 @@ export default function MainStack() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    database()
+      .ref('/Banner/Popup')
+      .once('value')
+      .then((snapshot) => {
+        setPopup(snapshot.val().url);
+      })
+      .then(() => {
+        if (Popup) {
+          navigation.navigate('Popup', {url: Popup});
+        }
+      });
+  }, [Popup]);
 
   const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();

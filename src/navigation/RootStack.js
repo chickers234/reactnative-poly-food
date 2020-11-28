@@ -8,6 +8,7 @@ import CategoryScreen from '../screens/CategoryScreen';
 import DetailMerchantScreen from '../screens/DetailMerchantScreen';
 import Main from '../screens/Main';
 import PhoneSignIn from '../screens/PhoneSignIn';
+import Popup from '../screens/Banner/Popup';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,17 @@ const routes = (initRoute) => {
         <Stack.Screen name="CategoryScreen" component={CategoryScreen} />
         <Stack.Screen name="PhoneSignIn" component={PhoneSignIn} />
         <Stack.Screen name="DetailBillScreen" component={DetailBillScreen} />
+        <Stack.Screen
+          name="Popup"
+          component={Popup}
+          options={{
+            headerShown: false,
+            animationEnabled: false,
+            cardStyle: {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            },
+          }}
+        />
       </Stack.Navigator>
     </>
   );

@@ -54,7 +54,11 @@ export default function MerchantItem({
         />
         <View style={{justifyContent: 'space-between'}}>
           <Text style={common.title}>{name}</Text>
-          <Text style={[common.subtitle, {color: colors.gray}]}>{address}</Text>
+          <Text
+            numberOfLines={1}
+            style={[common.subtitle, {color: colors.gray}]}>
+            {address}
+          </Text>
           <View
             style={{
               flexDirection: 'row',
@@ -92,6 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginBottom: 10,
+    paddingRight: 10,
   },
   image: {
     width: 100,
