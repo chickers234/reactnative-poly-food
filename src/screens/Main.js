@@ -1,8 +1,8 @@
 import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import messaging from '@react-native-firebase/messaging';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {useNavigation} from '@react-navigation/native';
 import React, {useContext, useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -75,17 +75,19 @@ export default function MainStack() {
   }, []);
 
   useEffect(() => {
-    database()
+    const onValueChange = database()
       .ref('/Banner/Popup')
-      .once('value')
-      .then((snapshot) => {
+      .on('value', (snapshot) => {
         setPopup(snapshot.val().url);
-      })
-      .then(() => {
-        if (Popup) {
-          navigation.navigate('Popup', {url: Popup});
-        }
       });
+
+    return () => database().ref('/Banner/Popup').off('value', onValueChange);
+  }, []);
+
+  useEffect(() => {
+    if (Popup) {
+      navigation.navigate('Popup', {url: Popup});
+    }
   }, [Popup]);
 
   const requestUserPermission = async () => {
