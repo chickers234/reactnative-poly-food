@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useContext,useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import database from '@react-native-firebase/database';
@@ -47,10 +47,12 @@ const WelcomeScreen = () => {
   }, [time, image]);
 
   const goHomeScreen = useCallback(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{name: auth().currentUser ? 'Main' : 'PhoneSignIn'}],
-    });
+    if (settingApp.settingApp.color) {
+      navigation.reset({
+        index: 0,
+        routes: [{name: auth().currentUser ? 'Main' : 'PhoneSignIn'}],
+      });
+    }
   }, [time]);
 
   if (image) {
