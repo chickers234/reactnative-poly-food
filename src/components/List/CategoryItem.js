@@ -12,14 +12,20 @@ import colors from '../../config/color';
 
 export const {width, height} = Dimensions.get('window');
 
-export default function CategoryItem({icon, title, tag}) {
+export default function CategoryItem({icon, title, tag, size}) {
   const navigation = useNavigation();
   return (
-    <Pressable onPress={() => navigation.navigate('CategoryScreen', {tag})}>
-      <View style={styles.container}>
-        <Image source={icon} style={styles.icon} />
-        <Text style={{fontFamily: 'Roboto-Light', fontSize: 12}}>{title}</Text>
+    <Pressable
+      style={styles.container}
+      onPress={() => navigation.navigate('CategoryScreen', {tag})}>
+      <View style={styles.image}>
+        <Image
+          source={icon}
+          resizeMode="stretch"
+          style={{height: size, width: size, marginBottom: 8}}
+        />
       </View>
+      <Text style={styles.title}>{title}</Text>
     </Pressable>
   );
 }
@@ -34,9 +40,13 @@ const styles = StyleSheet.create({
     height: height * 0.1,
     borderRadius: 5,
   },
-  icon: {
-    height: 38,
-    width: 38,
-    marginBottom: 8,
+  image: {
+    justifyContent: 'center',
+    height: height * 0.07,
+  },
+  title: {
+    fontFamily: 'Roboto-Light',
+    fontSize: 12,
+    textAlign: 'center',
   },
 });

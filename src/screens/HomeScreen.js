@@ -24,7 +24,7 @@ import * as helper from '../utils/helper';
 import {StoreContext} from '../utils/store';
 
 const _renderItemCategoty = ({item}) => (
-  <CategoryItem icon={item.icon} title={item.title} tag={item.tag} />
+  <CategoryItem icon={item.icon} title={item.title} tag={item.tag} size={item.size} />
 );
 
 const _renderItemMerchant = ({item}) => (
