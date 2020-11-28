@@ -84,7 +84,7 @@ export default function MenuScreen() {
     <View style={styles.container}>
       {_renderList()}
       <Pressable
-        style={{...styles.buttonAdd, backgroundColor: settingApp.settingApp.color}}
+        style={{...styles.buttonAdd, backgroundColor: 'black'}}
         onPress={() => goToCart()}>
         <Text style={styles.add}>Xem giỏ hàng</Text>
       </Pressable>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   add: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto-Regular',
     fontSize: 16,
     color: colors.white,
   },

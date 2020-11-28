@@ -61,7 +61,7 @@ export default function DetailBillScreen({route}) {
   }
   return (
     <View style={styles.container}>
-      <View style={{backgroundColor: settingApp.settingApp.color, height: 40}} />
+      <View style={{backgroundColor: settingApp.settingApp.backgroundColor, height: 40}} />
       <View style={styles.body}>
         <View style={{flexDirection: 'row', height: 45, alignItems: 'center'}}>
           <Pressable onPress={() => navigation.goBack()}>

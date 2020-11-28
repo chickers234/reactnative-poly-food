@@ -163,7 +163,7 @@ export default function CartScreen() {
     <View style={styles.container}>
       <View
         style={{
-          backgroundColor: settingApp.settingApp.color,
+          backgroundColor: settingApp.settingApp.backgroundColor,
           height: 40,
         }}
       />
@@ -253,10 +253,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   cart: {
-    height: height * 0.2,
-    width: height * 0.2,
+    height: height * 0.15,
+    width: height * 0.15,
     alignSelf: 'center',
     marginTop: height * 0.15,
-    opacity: 0.1,
+    opacity: 0.2,
   },
 });

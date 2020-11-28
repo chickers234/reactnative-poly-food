@@ -33,12 +33,12 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <View
-        style={{backgroundColor: settingApp.settingApp.color, height: 40}}
+        style={{backgroundColor: settingApp.settingApp.backgroundColor, height: 40}}
       />
       <View
         style={{
           ...styles.header,
-          backgroundColor: settingApp.settingApp.color,
+          backgroundColor: settingApp.settingApp.backgroundColor,
         }}>
         <Image
           style={styles.avatar}
@@ -76,7 +76,7 @@ export default function ProfileScreen() {
           <Pressable
             style={[
               styles.customButton,
-              {backgroundColor: settingApp.settingApp.color, marginTop: 20},
+              {backgroundColor: settingApp.settingApp.backgroundColor, marginTop: 20},
             ]}
             onPress={() => setDialog(true)}>
             <Text text="Cập nhật thông tin" color={colors.white} size={18} />

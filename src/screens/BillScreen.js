@@ -42,7 +42,7 @@ export default function BillScreen() {
     return (
       <View style={styles.container}>
         <View
-          style={{backgroundColor: settingApp.settingApp.color, height: 40}}
+          style={{backgroundColor: settingApp.settingApp.backgroundColor, height: 40}}
         />
         <View style={styles.body}>
           <Text text="Lịch sử giao dịch trống" size={16} color={colors.gray} />
@@ -54,7 +54,7 @@ export default function BillScreen() {
   return (
     <View style={styles.container}>
       <View
-        style={{backgroundColor: settingApp.settingApp.color, height: 40}}
+        style={{backgroundColor: settingApp.settingApp.backgroundColor, height: 40}}
       />
       <FlatList
         data={data}

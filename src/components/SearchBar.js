@@ -20,7 +20,7 @@ export default function SearchBar({goTo, tag, backTo}) {
 
   return (
     <LinearGradient
-      colors={[settingApp.settingApp.color, settingApp.settingApp.color]}
+      colors={[settingApp.settingApp.backgroundColor, settingApp.settingApp.backgroundColor]}
       style={styles.container}>
       <StatusBar
         translucent={true}

@@ -79,7 +79,7 @@ export default function MerchantItem({
             style={[
               styles.subtitle,
               {
-                color: settingApp.settingApp.color,
+                color: settingApp.settingApp.backgroundColor,
                 fontSize: 12,
                 borderColor: colors.gray,
               },

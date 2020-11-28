@@ -111,7 +111,7 @@ export default function MenuItem({id, image, name, price}) {
             style={[
               styles.subtitle,
               {
-                color: settingApp.settingApp.color,
+                color: settingApp.settingApp.backgroundColor,
                 fontSize: 12,
                 borderColor: colors.gray,
               },
@@ -148,7 +148,9 @@ export default function MenuItem({id, image, name, price}) {
               <Text style={styles.button}>+</Text>
             </Pressable>
           </View>
-          <Pressable style={styles.buttonAdd} onPress={() => addToCart()}>
+          <Pressable
+            style={{...styles.buttonAdd, backgroundColor: settingApp.settingApp.backgroundColor}}
+            onPress={() => addToCart()}>
             <Text style={styles.add}>
               Thêm vào giỏ hàng - {helper.formatMoney(total)} VNĐ
             </Text>
@@ -207,7 +209,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     margin: 20,
-    backgroundColor: colors.orange,
     borderRadius: 5,
   },
   add: {

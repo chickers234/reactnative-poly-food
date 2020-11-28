@@ -47,7 +47,7 @@ const WelcomeScreen = () => {
   }, [time, image]);
 
   const goHomeScreen = useCallback(() => {
-    if (settingApp.settingApp.color) {
+    if (settingApp.settingApp.backgroundColor) {
       navigation.reset({
         index: 0,
         routes: [{name: auth().currentUser ? 'Main' : 'PhoneSignIn'}],
