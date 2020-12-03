@@ -4,16 +4,19 @@ import messaging from '@react-native-firebase/messaging';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useNavigation} from '@react-navigation/native';
 import React, {useContext, useEffect, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, Dimensions, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {StoreContext} from '../utils/store';
 import BillScreen from './BillScreen';
 import CartScreen from './CartScreen';
 import HomeScreen from './HomeScreen';
 import ProfileScreen from './ProfileScreen';
+const {height, width} = Dimensions.get('window');
 
 const Tab = createBottomTabNavigator();
 
@@ -130,13 +133,66 @@ export default function MainStack() {
         }}
       />
       <Tab.Screen
+        name="Tin tức"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Tin tức',
+          tabBarIcon: ({color, size}) => (
+            <Ionicons name="ios-newspaper" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="CartScreen"
         component={CartScreen}
         options={{
-          tabBarLabel: 'Giỏ hàng',
-          tabBarIcon: ({color, size}) => (
-            <Foundation name="shopping-cart" color={color} size={28} />
-          ),
+          tabBarLabel: '',
+          tabBarIcon: ({color, size}) => {
+            return (
+              <View
+                style={{
+                  height:
+                    color !== '#BDBDBD' ? width * 0.13 + 7 : width * 0.13 + 5,
+                  width:
+                    color !== '#BDBDBD' ? width * 0.13 + 7 : width * 0.13 + 5,
+                  backgroundColor:
+                    color === '#BDBDBD'
+                      ? settingApp.settingApp.backgroundColor
+                      : 'white',
+                  borderRadius: (width * 0.15 + 5) / 2,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: -10,
+                }}>
+                <View
+                  style={{
+                    height: width * 0.13,
+                    width: width * 0.13,
+                    backgroundColor:
+                      color !== '#BDBDBD'
+                        ? settingApp.settingApp.backgroundColor
+                        : '#f2f2f2',
+                    borderRadius: 65 / 2,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    shadowColor: '#000000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 3,
+                  }}>
+                  <MaterialIcons
+                    name="shopping-basket"
+                    color={color === '#BDBDBD' ? '#848484' : 'white'}
+                    size={32}
+                  />
+                </View>
+              </View>
+            );
+          },
         }}
       />
       <Tab.Screen
