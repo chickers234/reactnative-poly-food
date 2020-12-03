@@ -7,7 +7,7 @@ import {StoreContext} from '../../utils/store';
 import Text from '../Text';
 
 export default function ProfileDialog({hideDialog}) {
-  const {token, user} = useContext(StoreContext);
+  const {token, user, settingApp} = useContext(StoreContext);
   const [name, setName] = useState(user.user.name);
   const [phonenumber, setPhonenumber] = useState(user.user.phonenumber);
   const [address, setAddress] = useState(user.user.address);
@@ -29,7 +29,11 @@ export default function ProfileDialog({hideDialog}) {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View
+        style={{
+          ...styles.header,
+          backgroundColor: settingApp.settingApp.backgroundColor,
+        }}>
         <Image
           style={styles.avatar}
           source={require('../../assets/icons/SuBeeTeam.png')}
@@ -72,9 +76,8 @@ export default function ProfileDialog({hideDialog}) {
 const styles = StyleSheet.create({
   header: {
     width: '100%',
-    backgroundColor: colors.yellow,
     alignItems: 'center',
-    padding: 20,
+    padding: 30,
     marginBottom: 10,
     marginTop: -20,
   },
@@ -98,11 +101,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.grey,
   },
   customButton: {
-    height: 40,
+    height: 45,
     backgroundColor: colors.black,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginBottom: 10,
+    marginTop: 20,
   },
 });

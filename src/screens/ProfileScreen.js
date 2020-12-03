@@ -33,7 +33,10 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <View
-        style={{backgroundColor: settingApp.settingApp.backgroundColor, height: 40}}
+        style={{
+          backgroundColor: settingApp.settingApp.backgroundColor,
+          height: 40,
+        }}
       />
       <View
         style={{
@@ -76,10 +79,17 @@ export default function ProfileScreen() {
           <Pressable
             style={[
               styles.customButton,
-              {backgroundColor: settingApp.settingApp.backgroundColor, marginTop: 20},
+              {
+                backgroundColor: settingApp.settingApp.backgroundColor,
+                marginTop: 20,
+              },
             ]}
             onPress={() => setDialog(true)}>
-            <Text text="Cập nhật thông tin" color={colors.white} size={18} />
+            <Text
+              text="Cập nhật thông tin"
+              color={settingApp.settingApp.colorText}
+              size={18}
+            />
           </Pressable>
           <Pressable
             style={[styles.customButton, {backgroundColor: colors.grey}]}
@@ -113,7 +123,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   customButton: {
-    height: 44,
+    height: 45,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',

@@ -13,7 +13,6 @@ import colors from '../../config/color';
 import common from '../../themes/common';
 import * as helper from '../../utils/helper';
 import {StoreContext} from '../../utils/store';
-
 export const {width, height} = Dimensions.get('window');
 
 export default function MenuItem({id, image, name, price}) {
@@ -149,7 +148,10 @@ export default function MenuItem({id, image, name, price}) {
             </Pressable>
           </View>
           <Pressable
-            style={{...styles.buttonAdd, backgroundColor: settingApp.settingApp.backgroundColor}}
+            style={{
+              ...styles.buttonAdd,
+              backgroundColor: settingApp.settingApp.backgroundColor,
+            }}
             onPress={() => addToCart()}>
             <Text style={styles.add}>
               Thêm vào giỏ hàng - {helper.formatMoney(total)} VNĐ

@@ -55,7 +55,7 @@ export default function DetailMerchantScreen({route, navigation}) {
           labelStyle: {
             fontSize: 13,
             fontFamily: 'Roboto-Bold',
-            color: colors.white,
+            color: settingApp.settingApp.colorText,
           },
           tabStyle: {width: width * 0.5},
           style: {backgroundColor: settingApp.settingApp.backgroundColor},
