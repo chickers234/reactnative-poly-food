@@ -108,9 +108,10 @@ export default function MenuItem({id, image, name, price}) {
           </Text>
           <Text
             style={[
-              styles.subtitle,
+              common.subtitle,
               {
-                color: settingApp.settingApp.backgroundColor,
+                // color: settingApp.settingApp.backgroundColor,
+                color: 'red',
                 fontSize: 12,
                 borderColor: colors.gray,
               },
