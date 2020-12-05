@@ -61,7 +61,12 @@ export default function DetailBillScreen({route}) {
   }
   return (
     <View style={styles.container}>
-      <View style={{backgroundColor: settingApp.settingApp.backgroundColor, height: 40}} />
+      <View
+        style={{
+          backgroundColor: settingApp.settingApp.backgroundColor,
+          height: 40,
+        }}
+      />
       <View style={styles.body}>
         <View style={{flexDirection: 'row', height: 45, alignItems: 'center'}}>
           <Pressable onPress={() => navigation.goBack()}>
@@ -82,7 +87,7 @@ export default function DetailBillScreen({route}) {
           <Text text={'Địa chỉ: ' + bill.address} />
           <Text text={'Số điện thoại: ' + bill.phonenumber} />
         </View>
-        <View style={[styles.section, {flex: 2.5}]}>
+        <View style={[styles.section, {flex: 2}]}>
           <Text text="Thông tin món ăn" size={16} fontFamily="bold" />
           <FlatList
             data={bill.gioHangList}
@@ -90,7 +95,11 @@ export default function DetailBillScreen({route}) {
             renderItem={_renderItem}
           />
         </View>
-        <View style={[styles.section, {flex: 0.2, flexDirection: 'row'}]}>
+        <View
+          style={[
+            styles.section,
+            {flex: 0.2, flexDirection: 'row', alignItems: 'center'},
+          ]}>
           <Text text="Tổng cộng:" size={16} fontFamily="bold" />
           <Text
             text={helper.formatMoney(bill.total) + ' VNĐ'}
@@ -114,12 +123,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section: {
-    padding: 10,
+    padding: 8,
     borderWidth: 1.5,
     borderColor: colors.grey,
     borderRadius: 5,
     marginBottom: 5,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   line: {
     height: 1,
