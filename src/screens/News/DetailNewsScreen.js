@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import colors from '../../config/color';
 import ic_back from '../../assets/icons/back.png';
+import {ScrollView} from 'react-native-gesture-handler';
 const {height, width} = Dimensions.get('window');
 
 const DetailNewsScreen = ({route}) => {
@@ -27,15 +28,21 @@ const DetailNewsScreen = ({route}) => {
           resizeMode={FastImage.resizeMode.contain}
         />
       </Pressable>
-      <View style={styles.info}>
-        <Text style={styles.title}>{title}</Text>
-        <View
-          style={{flexDirection: 'row', alignItems: 'center', marginBottom: 8}}>
-          <Fontisto name="date" color={'gray'} size={14} />
-          <Text style={styles.time}>{time}</Text>
+      <ScrollView>
+        <View style={styles.info}>
+          <Text style={styles.title}>{title}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: 8,
+            }}>
+            <Fontisto name="date" color={'gray'} size={14} />
+            <Text style={styles.time}>{time}</Text>
+          </View>
+          <Text style={styles.happy}>{happy}</Text>
         </View>
-        <Text style={styles.happy}>{happy}</Text>
-      </View>
+      </ScrollView>
     </View>
   );
 };
