@@ -22,7 +22,7 @@ const DetailNewsScreen = ({route}) => {
       />
       <Pressable style={styles.back} onPress={() => navigation.goBack()}>
         <FastImage
-          style={{height: 17, width: 17}}
+          style={{height: 15, width: 15}}
           source={ic_back}
           resizeMode={FastImage.resizeMode.contain}
         />
@@ -71,10 +71,12 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   back: {
-    backgroundColor: 'black',
-    padding: 6,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    paddingRight: 7,
+    paddingLeft: 5,
+    paddingVertical: 6,
     position: 'absolute',
-    top: 50,
+    top: 40,
     left: 20,
     borderRadius: 100,
     justifyContent: 'center',

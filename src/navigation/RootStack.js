@@ -11,6 +11,7 @@ import DetailMerchantScreen from '../screens/DetailMerchantScreen';
 import Main from '../screens/Main';
 import PhoneSignIn from '../screens/PhoneSignIn';
 import DetailNewsScreen from '../screens/News/DetailNewsScreen';
+import MapScreen from '../screens/DetailMerchant/MapScreen';
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,13 @@ export default function App() {
         <Stack.Screen
           name="DetailMerchantScreen"
           component={DetailMerchantScreen}
+        />
+        <Stack.Screen
+          name="MapScreen"
+          component={MapScreen}
+          options={{
+            animationEnabled: false,
+          }}
         />
         <Stack.Screen name="CategoryScreen" component={CategoryScreen} />
         <Stack.Screen name="DetailBillScreen" component={DetailBillScreen} />

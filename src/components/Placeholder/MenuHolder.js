@@ -11,7 +11,7 @@ export default function MenuHolder() {
         <View style={styles.container}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={styles.block1} />
-            <View style={styles.block2} />
+            <View style={{...styles.block2, borderTopRightRadius: 100}} />
           </View>
         </View>
 

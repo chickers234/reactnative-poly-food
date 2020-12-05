@@ -73,7 +73,7 @@ export default function MerchantItem({
               source={require('../../assets/icons/distance.png')}
               style={[styles.icon, {marginLeft: 100}]}
             />
-            <Text style={styles.subtitle}>{dis} km</Text>
+            <Text style={common.subtitle}>{dis} km</Text>
           </View>
           <Text
             style={[

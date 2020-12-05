@@ -129,7 +129,7 @@ export default function MenuItem({id, image, name, price}) {
         openDuration={200}
         customStyles={{
           wrapper: {
-            backgroundColor: 'rgba(0, 0, 0, 0.3);',
+            backgroundColor: 'rgba(0, 0, 0, 0.3)',
             //backgroundColor: 'transparent',
           },
           draggableIcon: {

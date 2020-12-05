@@ -187,7 +187,7 @@ export default function MainStack() {
                   <MaterialIcons
                     name="shopping-basket"
                     color={color === '#BDBDBD' ? '#848484' : 'white'}
-                    size={32}
+                    size={30}
                   />
                 </View>
               </View>

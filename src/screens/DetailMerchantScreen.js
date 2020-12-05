@@ -9,18 +9,24 @@ import {
   Text,
   View,
 } from 'react-native';
+import MapView, {Marker} from 'react-native-maps';
 import colors from '../config/color';
-import MapScreen from '../screens/DetailMerchant/MapScreen';
 import MenuScreen from '../screens/DetailMerchant/MenuScreen';
 import common from '../themes/common';
 import {StoreContext} from '../utils/store';
-
 const Tab = createMaterialTopTabNavigator();
 const {width, height} = Dimensions.get('window');
+const ASPECT_RATIO = width / height;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function DetailMerchantScreen({route, navigation}) {
   const {id, image, name, address} = route.params;
-  const {settingApp} = useContext(StoreContext);
+  const {userLoc, merchantLoc, settingApp} = useContext(StoreContext);
+  const origin = {
+    latitude: userLoc.userLoc.lat,
+    longitude: userLoc.userLoc.long,
+  };
 
   return (
     <View style={styles.container}>
@@ -32,9 +38,17 @@ export default function DetailMerchantScreen({route, navigation}) {
           }}>
           <View style={styles.overview} />
         </ImageBackground>
-        <View style={{position: 'absolute', bottom: 10, paddingLeft: 10}}>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 110,
+            paddingLeft: 10,
+            width: width * 0.8,
+          }}>
           <Text style={[common.title, {color: colors.white}]}>{name}</Text>
-          <Text style={[common.subtitle, {color: colors.white}]}>
+          <Text
+            style={[common.subtitle, {color: colors.white}]}
+            numberOfLines={2}>
             {address}
           </Text>
         </View>
@@ -48,9 +62,59 @@ export default function DetailMerchantScreen({route, navigation}) {
           />
           <Text style={[common.title, {color: colors.white}]}>Back</Text>
         </Pressable>
+
+        <Pressable
+          style={{
+            height: 60,
+            width: 60,
+            position: 'absolute',
+            right: 20,
+            top: 40,
+          }}
+          onPress={() => {
+            navigation.navigate('MapScreen');
+          }}>
+          <MapView
+            style={StyleSheet.absoluteFill}
+            initialRegion={{
+              latitude: origin.latitude,
+              longitude: origin.longitude,
+              latitudeDelta: LATITUDE_DELTA,
+              longitudeDelta: LONGITUDE_DELTA,
+            }}>
+            <Marker
+              coordinate={{
+                latitude: origin.latitude,
+                longitude: origin.longitude,
+              }}>
+              <Image
+                source={require('../assets/icons/user_marker.png')}
+                style={{height: 20, width: 20}}
+              />
+            </Marker>
+          </MapView>
+          <View
+            style={{
+              height: 60,
+              width: 60,
+              position: 'absolute',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            }}
+          />
+        </Pressable>
       </View>
 
-      <Tab.Navigator
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.white,
+          borderTopRightRadius: 100,
+          marginTop: -100,
+        }}>
+        <MenuScreen />
+      </View>
+
+      {/* <Tab.Navigator
         tabBarOptions={{
           labelStyle: {
             fontSize: 13,
@@ -62,7 +126,7 @@ export default function DetailMerchantScreen({route, navigation}) {
         }}>
         <Tab.Screen name="Thực đơn" component={MenuScreen} />
         <Tab.Screen name="Bản đồ" component={MapScreen} />
-      </Tab.Navigator>
+      </Tab.Navigator> */}
     </View>
   );
 }
@@ -76,7 +140,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width,
-    height: height * 0.25,
+    height: height * 0.4,
   },
   overview: {
     flex: 1,
