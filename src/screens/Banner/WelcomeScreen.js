@@ -1,9 +1,21 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
+import {useNavigation} from '@react-navigation/native';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {StoreContext} from '../../utils/store';
 
 const WelcomeScreen = () => {
@@ -55,16 +67,23 @@ const WelcomeScreen = () => {
     }
   }, [time]);
 
+  const _renderBanner = useMemo(
+    () => () => (
+      <FastImage
+        style={{flex: 1}}
+        source={{
+          uri: image,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
+      />
+    ),
+    [image],
+  );
+
   if (image) {
     return (
       <View style={styles.container}>
-        <FastImage
-          style={{flex: 1}}
-          source={{
-            uri: image,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+        {_renderBanner()}
         <Pressable onPress={() => goHomeScreen()} style={styles.action}>
           <Text style={styles.text}>{time}</Text>
           <Text style={styles.text}>{'   |   '}</Text>
@@ -73,7 +92,14 @@ const WelcomeScreen = () => {
       </View>
     );
   }
-  return <View />;
+  return (
+    <View style={{flex: 1, justifyContent: 'center'}}>
+      <ActivityIndicator
+        size="large"
+        color={settingApp.settingApp.backgroundColor}
+      />
+    </View>
+  );
 };
 
 export default WelcomeScreen;
