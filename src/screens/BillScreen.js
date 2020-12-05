@@ -6,7 +6,6 @@ import {BillItem} from '../components/List';
 import Text from '../components/Text';
 import colors from '../config/color';
 import {StoreContext} from '../utils/store';
-
 const {width, height} = Dimensions.get('window');
 
 const _renderItem = ({item}) => (
@@ -64,6 +63,7 @@ export default function BillScreen() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

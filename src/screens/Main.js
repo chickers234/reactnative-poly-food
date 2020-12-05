@@ -8,13 +8,13 @@ import {Alert, Dimensions, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {StoreContext} from '../utils/store';
 import BillScreen from './BillScreen';
 import CartScreen from './CartScreen';
 import HomeScreen from './HomeScreen';
+import NewsScreen from './News/NewsScreen';
 import ProfileScreen from './ProfileScreen';
 const {height, width} = Dimensions.get('window');
 
@@ -134,7 +134,7 @@ export default function MainStack() {
       />
       <Tab.Screen
         name="Tin tức"
-        component={HomeScreen}
+        component={NewsScreen}
         options={{
           tabBarLabel: 'Tin tức',
           tabBarIcon: ({color, size}) => (

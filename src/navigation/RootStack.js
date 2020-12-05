@@ -10,6 +10,7 @@ import DetailBillScreen from '../screens/DetailBillScreen';
 import DetailMerchantScreen from '../screens/DetailMerchantScreen';
 import Main from '../screens/Main';
 import PhoneSignIn from '../screens/PhoneSignIn';
+import DetailNewsScreen from '../screens/News/DetailNewsScreen';
 
 const Stack = createStackNavigator();
 
@@ -50,11 +51,11 @@ export default function App() {
         />
         <Stack.Screen name="CategoryScreen" component={CategoryScreen} />
         <Stack.Screen name="DetailBillScreen" component={DetailBillScreen} />
+        <Stack.Screen name="DetailNewsScreen" component={DetailNewsScreen} />
         <Stack.Screen
           name="Popup"
           component={Popup}
           options={{
-            headerShown: false,
             animationEnabled: false,
             cardStyle: {
               backgroundColor: 'rgba(0, 0, 0, 0.7)',
