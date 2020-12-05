@@ -11,7 +11,7 @@ export default StyleSheet.create({
     fontSize: 14,
   },
   body: {
-    padding: width * 0.01,
+    padding: width * 0.02,
     height: height * 0.55,
     paddingBottom: Platform.OS === 'ios' ? 100 : 70,
   },

@@ -175,7 +175,6 @@ export default function HomeScreen() {
           style={{fontSize: 24, fontFamily: 'Roboto-Light', marginBottom: 10}}>
           Món ăn gần bạn
         </Text>
-
         {_renderList()}
       </View>
     </View>
@@ -187,7 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   body: {
-    padding: width * 0.01,
+    padding: width * 0.02,
     height: height * 0.55,
     paddingBottom: Platform.OS === 'ios' ? 100 : 70,
   },

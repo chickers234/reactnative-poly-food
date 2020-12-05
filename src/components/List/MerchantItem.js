@@ -56,7 +56,10 @@ export default function MerchantItem({
           <Text style={common.title}>{name}</Text>
           <Text
             numberOfLines={1}
-            style={[common.subtitle, {color: colors.gray}]}>
+            style={[
+              common.subtitle,
+              {color: colors.gray, width: width * 0.65},
+            ]}>
             {address}
           </Text>
           <View
@@ -100,8 +103,8 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: width * 0.27,
+    height: width * 0.27,
     borderRadius: 10,
     marginRight: 8,
   },

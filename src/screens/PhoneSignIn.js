@@ -39,13 +39,15 @@ export default function PhoneSignIn() {
   };
 
   const confirmCode = async () => {
-    try {
-      await confirm.confirm(code).then(() => {
-        console.log('uid: ' + auth().currentUser.uid);
-      });
-    } catch (error) {
-      console.log(error);
-      alert('Mã OTP không hợp lệ!');
+    if (code) {
+      try {
+        await confirm.confirm(code).then(() => {
+          console.log('uid: ' + auth().currentUser.uid);
+        });
+      } catch (error) {
+        console.log(error);
+        alert('Mã OTP không hợp lệ!');
+      }
     }
   };
 

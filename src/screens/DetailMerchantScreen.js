@@ -41,7 +41,7 @@ export default function DetailMerchantScreen({route, navigation}) {
         <View
           style={{
             position: 'absolute',
-            bottom: 110,
+            bottom: 70,
             paddingLeft: 10,
             width: width * 0.8,
           }}>
@@ -108,8 +108,8 @@ export default function DetailMerchantScreen({route, navigation}) {
         style={{
           flex: 1,
           backgroundColor: colors.white,
-          borderTopRightRadius: 100,
-          marginTop: -100,
+          borderTopRightRadius: 60,
+          marginTop: -60,
         }}>
         <MenuScreen />
       </View>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width,
-    height: height * 0.4,
+    height: height * 0.35,
   },
   overview: {
     flex: 1,
