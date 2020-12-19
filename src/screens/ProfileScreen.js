@@ -1,4 +1,5 @@
 import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 import React, {useContext, useState} from 'react';
 import {Image, Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import RNRestart from 'react-native-restart';
@@ -18,6 +19,13 @@ export default function ProfileScreen() {
   };
 
   const logOut = async () => {
+    database()
+      .ref(`/User/${auth().currentUser.uid}/token`)
+      .set(false)
+      .catch((error) => {
+        console.log(error);
+      });
+
     auth()
       .signOut()
       .then(

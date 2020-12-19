@@ -34,7 +34,7 @@ export default function MainStack() {
     name: '',
     phonenumber: '',
     uid: auth().currentUser.uid,
-    token: '',
+    token: token?.token,
   };
 
   const createUser = () => {
@@ -65,9 +65,17 @@ export default function MainStack() {
     try {
       database()
         .ref(`/User/${auth().currentUser.uid}`)
-        .on('value', (snapshot) => {
+        .once('value', (snapshot) => {
           if (snapshot.val() !== null) {
-            user.setUser(snapshot.val());
+            database()
+              .ref(`/User/${auth().currentUser.uid}/token`)
+              .set(token?.token)
+              .then(() => {
+                user.setUser(snapshot.val());
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           } else {
             createUser();
             user.setUser(userRef);
@@ -77,7 +85,7 @@ export default function MainStack() {
       console.log(error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const onValueChange = database()
