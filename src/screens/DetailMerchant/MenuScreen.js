@@ -84,9 +84,14 @@ export default function MenuScreen() {
     <View style={styles.container}>
       {_renderList()}
       <Pressable
-        style={{...styles.buttonAdd, backgroundColor: 'black'}}
+        style={{
+          ...styles.buttonAdd,
+          backgroundColor: settingApp.settingApp.backgroundColor,
+        }}
         onPress={() => goToCart()}>
-        <Text style={styles.add}>Xem giỏ hàng</Text>
+        <Text style={{...styles.add, color: settingApp.settingApp.colorText}}>
+          Xem giỏ hàng
+        </Text>
       </Pressable>
     </View>
   );
