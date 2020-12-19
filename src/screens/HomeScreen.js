@@ -54,7 +54,7 @@ export default function HomeScreen() {
   const [latitude, setLat] = useState('');
   const [longitude, setLong] = useState('');
   const [data, setData] = useState([]);
-  const {userLoc, userPos, token} = useContext(StoreContext);
+  const {userLoc, userPos, token, settingApp} = useContext(StoreContext);
   const numColumns = 4;
 
   useEffect(() => {
@@ -196,8 +196,13 @@ export default function HomeScreen() {
       </View>
       <View style={styles.body}>
         <Text
-          style={{fontSize: 24, fontFamily: 'Roboto-Light', marginBottom: 10}}>
-          Món ăn gần bạn
+          style={{
+            fontSize: 18,
+            fontFamily: 'Roboto-Medium',
+            marginBottom: 10,
+            color: settingApp.settingApp.backgroundColor,
+          }}>
+          Cửa hàng gần bạn
         </Text>
         {_renderList()}
       </View>
