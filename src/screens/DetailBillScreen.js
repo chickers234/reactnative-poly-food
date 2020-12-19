@@ -2,7 +2,14 @@ import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState, useContext} from 'react';
-import {Dimensions, FlatList, Pressable, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CartItem} from '../components/List';
 import Text from '../components/Text';
@@ -57,7 +64,11 @@ export default function DetailBillScreen({route}) {
   }, [bill.macuahang, id, merchant]);
 
   if (!merchant) {
-    return <View />;
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color={settingApp.settingApp.backgroundColor} />
+      </View>
+    );
   }
   return (
     <View style={styles.container}>

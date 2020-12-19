@@ -25,6 +25,7 @@ const _renderItemMerchant = ({item}) => (
 
 export default function CategoryScreen({route}) {
   const tag = route.params.tag;
+  const {settingApp} = useContext(StoreContext);
   const [data, setData] = useState([]);
   const {userLoc} = useContext(StoreContext);
   const [loadMoreSize, setLoadMoreSize] = useState(10);
@@ -93,13 +94,24 @@ export default function CategoryScreen({route}) {
         {loading === true ? (
           <ActivityIndicator
             size="large"
-            color="#A4A4A4"
+            color={settingApp.settingApp.backgroundColor}
             style={styles.activityIndicator}
           />
         ) : null}
       </View>
     );
   };
+
+  if (!data.length) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator
+          size="large"
+          color={settingApp.settingApp.backgroundColor}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

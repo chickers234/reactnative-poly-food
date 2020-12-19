@@ -1,6 +1,12 @@
 import database from '@react-native-firebase/database';
 import React, {useContext, useEffect, useState} from 'react';
-import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  View,
+} from 'react-native';
 import NewsItem from '../../components/List/NewsItem';
 import {StoreContext} from '../../utils/store';
 const {width, height} = Dimensions.get('window');
@@ -31,6 +37,17 @@ const NewsScreen = () => {
       time={item.time}
     />
   );
+
+  if (!data.length) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator
+          size="large"
+          color={settingApp.settingApp.backgroundColor}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
