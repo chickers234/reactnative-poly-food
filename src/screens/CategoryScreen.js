@@ -105,14 +105,16 @@ export default function CategoryScreen({route}) {
   return (
     <View style={styles.container}>
       <SearchBar backTo="Main" />
-      <FlatList
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={_renderItemMerchant}
-        onEndReachedThreshold={0.1}
-        onEndReached={_loadMore}
-        ListFooterComponent={_renderFooter}
-      />
+      <View style={{flex: 1, paddingHorizontal: 8}}>
+        <FlatList
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={_renderItemMerchant}
+          onEndReachedThreshold={0.5}
+          onEndReached={_loadMore}
+          ListFooterComponent={_renderFooter}
+        />
+      </View>
     </View>
   );
 }
@@ -122,6 +124,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   activityIndicator: {
-    margin: 15,
+    margin: 20,
   },
 });

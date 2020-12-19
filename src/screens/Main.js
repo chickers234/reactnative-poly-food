@@ -34,7 +34,7 @@ export default function MainStack() {
     name: '',
     phonenumber: '',
     uid: auth().currentUser.uid,
-    token: token?.token,
+    token: '',
   };
 
   const createUser = () => {
@@ -65,17 +65,9 @@ export default function MainStack() {
     try {
       database()
         .ref(`/User/${auth().currentUser.uid}`)
-        .once('value', (snapshot) => {
+        .on('value', (snapshot) => {
           if (snapshot.val() !== null) {
-            database()
-              .ref(`/User/${auth().currentUser.uid}/token`)
-              .set(token?.token)
-              .then(() => {
-                user.setUser(snapshot.val());
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+            user.setUser(snapshot.val());
           } else {
             createUser();
             user.setUser(userRef);
@@ -85,7 +77,7 @@ export default function MainStack() {
       console.log(error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     const onValueChange = database()
@@ -126,19 +118,10 @@ export default function MainStack() {
 
   //TODO: VIEWED COUNTER
   useEffect(() => {
-    const onValueChange = database()
-      .ref(`ViewedCount/${year}/${month}`)
-      .once('value', (snapshot) => {
-        database()
-          .ref(`ViewedCount/${year}/${month}`)
-          .set(snapshot.val() + 1)
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-
-    return () =>
-      database().ref(`ViewCount/${year}`).off('value', onValueChange);
+    const ref = database().ref(`ViewedCount/${year}/${month}`);
+    ref.transaction(function (value) {
+      return value + 1;
+    });
   }, [year, month]);
 
   return (
