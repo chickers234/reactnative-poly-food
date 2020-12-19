@@ -43,14 +43,14 @@ export default function DetailBillScreen({route}) {
             setMerchant(snapshot.val());
           });
 
-        if (merchant) {
+        return () => {
           database()
             .ref(`/DonHang/User/${auth().currentUser.uid}/${id}`)
             .off('value', billRef);
           database()
             .ref(`/CuaHang/${bill.macuahang}`)
             .off('value', merchantRef);
-        }
+        };
       } catch (error) {}
     };
     getData();

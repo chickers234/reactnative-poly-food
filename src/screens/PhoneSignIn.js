@@ -42,7 +42,7 @@ export default function PhoneSignIn() {
     if (code) {
       try {
         await confirm.confirm(code).then(() => {
-          console.log('uid: ' + auth().currentUser.uid);
+          //console.log('uid: ' + auth().currentUser.uid);
         });
       } catch (error) {
         console.log(error);

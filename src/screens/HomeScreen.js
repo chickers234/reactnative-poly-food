@@ -24,7 +24,12 @@ import * as helper from '../utils/helper';
 import {StoreContext} from '../utils/store';
 
 const _renderItemCategoty = ({item}) => (
-  <CategoryItem icon={item.icon} title={item.title} tag={item.tag} size={item.size} />
+  <CategoryItem
+    icon={item.icon}
+    title={item.title}
+    tag={item.tag}
+    size={item.size}
+  />
 );
 
 const _renderItemMerchant = ({item}) => (
@@ -68,7 +73,7 @@ export default function HomeScreen() {
         Geocoder.from(location.latitude, location.longitude)
           .then((json) => {
             userPos.setUserPos(json.results[0].formatted_address);
-            console.log(json.results[0].formatted_address);
+            //console.log(json.results[0].formatted_address);
           })
           .catch((error) => console.log(error));
       })
@@ -90,34 +95,41 @@ export default function HomeScreen() {
   }, []);
 
   useEffect(() => {
-    const onValueChange = database()
-      .ref('/CuaHang')
-      .on('value', (snapshot) => {
-        let MerchantList = [];
-        snapshot.forEach((child) => {
-          let dis = getDistance(
-            {latitude: latitude, longitude: longitude},
-            {latitude: child.val().latitude, longitude: child.val().longitude},
-          );
-          if (dis / 1000 < 5) {
-            MerchantList.push({
-              id: child.val().macuahang,
-              image: child.val().hinhanh,
-              name: child.val().tencuahang,
-              address: child.val().diachi,
-              rating: child.val().rating,
-              lat: child.val().latitude,
-              long: child.val().longitude,
-              dis: helper.getDistance(dis),
-            });
-          }
+    try {
+      const onValueChange = database()
+        .ref('/CuaHang')
+        .on('value', (snapshot) => {
+          let MerchantList = [];
+          snapshot.forEach((child) => {
+            let dis = getDistance(
+              {latitude: latitude, longitude: longitude},
+              {
+                latitude: child.val().latitude,
+                longitude: child.val().longitude,
+              },
+            );
+            if (dis / 1000 < 5) {
+              MerchantList.push({
+                id: child.val().macuahang,
+                image: child.val().hinhanh,
+                name: child.val().tencuahang,
+                address: child.val().diachi,
+                rating: child.val().rating,
+                lat: child.val().latitude,
+                long: child.val().longitude,
+                dis: helper.getDistance(dis),
+              });
+            }
+          });
+          setData(helper.sortByDistance(MerchantList));
+          setLoading(false);
         });
-        setData(helper.sortByDistance(MerchantList));
-        setLoading(false);
-      });
 
-    // Stop listening for updates when no longer required
-    return () => database().ref('/CuaHang').off('value', onValueChange);
+      // Stop listening for updates when no longer required
+      return () => database().ref('/CuaHang').off('value', onValueChange);
+    } catch (error) {
+      console.log(error)
+    }
   }, [data, latitude, longitude]);
 
   const _renderList = () => {
