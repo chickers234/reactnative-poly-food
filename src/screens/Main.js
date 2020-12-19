@@ -25,7 +25,8 @@ export default function MainStack() {
   const {token, user} = useContext(StoreContext);
   const [Popup, setPopup] = useState('');
   const {settingApp} = useContext(StoreContext);
-
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
   const userRef = {
     address: '',
     birthday: '',
@@ -114,6 +115,23 @@ export default function MainStack() {
       console.log('Failed', 'No token received');
     }
   };
+
+  //TODO: VIEWED COUNTER
+  useEffect(() => {
+    const onValueChange = database()
+      .ref(`ViewedCount/${year}/${month}`)
+      .once('value', (snapshot) => {
+        database()
+          .ref(`ViewedCount/${year}/${month}`)
+          .set(snapshot.val() + 1)
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+
+    return () =>
+      database().ref(`ViewCount/${year}`).off('value', onValueChange);
+  }, [year, month]);
 
   return (
     <Tab.Navigator
