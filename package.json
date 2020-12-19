@@ -3,10 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "android-release": "react-native run-android --variant=release",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "pod-install": "cd ios && pod install && cd ..",
     "start": "react-native start",
+    "apk-release": "cd android && ./gradlew clean && ./gradlew assembleRelease && cd ..",
+    "aab-release": "cd android && ./gradlew clean && ./gradlew bundleRelease && cd ..",
+    "signingReport": "cd android && ./gradlew signingReport",
     "test": "jest",
     "lint": "eslint ."
   },
