@@ -1,5 +1,5 @@
-import React, {useState, useContext, useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState, useContext, useEffect, useCallback} from 'react';
+import {StyleSheet, ActivityIndicator, View, Text} from 'react-native';
 import {MerchantItem} from '../components/List';
 import SearchBar from '../components/SearchBar';
 import {FlatList} from 'react-native-gesture-handler';
@@ -27,11 +27,20 @@ export default function CategoryScreen({route}) {
   const tag = route.params.tag;
   const [data, setData] = useState([]);
   const {userLoc} = useContext(StoreContext);
+  const [loadMoreSize, setLoadMoreSize] = useState(10);
+  const [loading, setLoading] = useState(false);
+  let size = 0;
 
   useEffect(() => {
+    if (tag === 'TL08') {
+      size = loadMoreSize;
+    } else {
+      size = 9999;
+    }
     try {
       const onValueChange = database()
         .ref('/CuaHang')
+        .limitToFirst(size)
         .on('value', (snapshot) => {
           let MerchantList = [];
           snapshot.forEach((child) => {
@@ -61,22 +70,49 @@ export default function CategoryScreen({route}) {
               }
             }
           });
+          setLoading(false);
           setData(helper.sortByDistance(MerchantList));
         });
 
       return () => database().ref('/CuaHang').off('value', onValueChange);
-    } catch (error) {}
-  }, [tag, userLoc.userLoc.lat, userLoc.userLoc.long]);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [tag, userLoc.userLoc.lat, userLoc.userLoc.long, loadMoreSize]);
+
+  const _loadMore = useCallback(() => {
+    if (loadMoreSize <= 40) {
+      console.log(loadMoreSize);
+      setLoading(true);
+      setLoadMoreSize(loadMoreSize + 5);
+    }
+  }, [loading]);
+
+  const _renderFooter = () => {
+    return (
+      <View>
+        {loading === true ? (
+          <ActivityIndicator
+            size="large"
+            color="#A4A4A4"
+            style={styles.activityIndicator}
+          />
+        ) : null}
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <SearchBar backTo="Main" />
-      <View style={[common.body, {height: '95%'}]}>
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={_renderItemMerchant}
-        />
-      </View>
+      <FlatList
+        data={data}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={_renderItemMerchant}
+        onEndReachedThreshold={0.1}
+        onEndReached={_loadMore}
+        ListFooterComponent={_renderFooter}
+      />
     </View>
   );
 }
@@ -84,5 +120,8 @@ export default function CategoryScreen({route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  activityIndicator: {
+    margin: 15,
   },
 });

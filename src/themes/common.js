@@ -12,7 +12,7 @@ export default StyleSheet.create({
   },
   body: {
     padding: width * 0.02,
-    height: height * 0.55,
+    height: height * 0.95,
     paddingBottom: Platform.OS === 'ios' ? 100 : 70,
   },
 });
