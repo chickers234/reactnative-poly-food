@@ -65,8 +65,8 @@ export default function DetailMerchantScreen({route, navigation}) {
 
         <Pressable
           style={{
-            height: 60,
-            width: 60,
+            height: 65,
+            width: 65,
             position: 'absolute',
             right: 20,
             top: 40,
@@ -95,8 +95,8 @@ export default function DetailMerchantScreen({route, navigation}) {
           </MapView>
           <View
             style={{
-              height: 60,
-              width: 60,
+              height: 65,
+              width: 65,
               position: 'absolute',
               backgroundColor: 'rgba(255, 255, 255, 0.1)',
             }}
