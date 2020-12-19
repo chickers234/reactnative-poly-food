@@ -80,7 +80,7 @@ export default function MainStack() {
       database()
         .ref(`/User/${auth().currentUser.uid}`)
         .on('value', (snapshot) => {
-          if (snapshot.val() === null) {
+          if (snapshot.val() !== null) {
             user.setUser(snapshot.val());
           } else {
             createUser();

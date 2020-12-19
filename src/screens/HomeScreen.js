@@ -58,12 +58,14 @@ export default function HomeScreen() {
   const numColumns = 4;
 
   useEffect(() => {
-    database()
-      .ref(`/User/${auth().currentUser.uid}/token`)
-      .set(token.token)
-      .catch((error) => {
-        console.log(error);
-      });
+    if (token.token) {
+      database()
+        .ref(`/User/${auth().currentUser.uid}/token`)
+        .set(token.token)
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, [token.token]);
 
   useEffect(() => {

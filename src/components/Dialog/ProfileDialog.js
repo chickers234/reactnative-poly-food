@@ -27,8 +27,9 @@ export default function ProfileDialog({hideDialog}) {
           uid: auth().currentUser.uid,
         };
         user.setUser(newUser);
-        await database().ref(`/User/${auth().currentUser.uid}`).set(newUser);
+        database().ref(`/User/${auth().currentUser.uid}`).set(newUser);
         hideDialog();
+        CustomToast('Cập nhật thành công');
       }
     } else {
       CustomToast('Vui lòng nhập đầy đủ thông tin');
