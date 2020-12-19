@@ -92,7 +92,7 @@ export default function HomeScreen() {
       .catch((error) => {
         console.log(error.message);
         Alert.alert(
-          'Thông báo',
+          '',
           'Ứng dụng yêu cầu chia sẻ vị trí của bạn để tiếp tục.',
           [
             {
@@ -198,7 +198,7 @@ export default function HomeScreen() {
         <Text
           style={{
             fontSize: 18,
-            fontFamily: 'Roboto-Medium',
+            fontFamily: 'Roboto-Regular',
             marginBottom: 10,
             color: settingApp.settingApp.backgroundColor,
           }}>

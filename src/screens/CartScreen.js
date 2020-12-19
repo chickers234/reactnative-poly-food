@@ -141,7 +141,7 @@ export default function CartScreen() {
           <Title text="Chi tiết đơn hàng" fontFamily="regular" size={18} />
           <Image
             style={styles.cart}
-            source={require('../assets/icons/cart_empty.png')}
+            source={require('../assets/icons/ic_empty_list.gif')}
             resizeMode="contain"
           />
         </>
@@ -203,12 +203,7 @@ export default function CartScreen() {
           },
         ]}
         onPress={() => submit()}>
-        <Title
-          text={'Đặt Đơn'}
-          color="white"
-          fontFamily="regular"
-          size={18}
-        />
+        <Title text={'Đặt Đơn'} color="white" fontFamily="regular" size={18} />
       </Pressable>
     </View>
   );
@@ -253,10 +248,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   cart: {
-    height: height * 0.15,
-    width: height * 0.15,
+    height: height * 0.25,
+    width: height * 0.25,
     alignSelf: 'center',
     marginTop: height * 0.15,
-    opacity: 0.2,
   },
 });

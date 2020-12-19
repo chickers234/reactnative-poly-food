@@ -46,44 +46,53 @@ export default function ProfileScreen() {
           height: 40,
         }}
       />
+      <View style={{backgroundColor: 'white', flex: 1}}>
+        <View
+          style={{
+            ...styles.header,
+            backgroundColor: settingApp.settingApp.backgroundColor,
+          }}>
+          <Image
+            style={styles.avatar}
+            source={require('../assets/icons/SuBeeTeam.png')}
+          />
+        </View>
+      </View>
+
       <View
         style={{
-          ...styles.header,
+          flex: 3,
           backgroundColor: settingApp.settingApp.backgroundColor,
         }}>
-        <Image
-          style={styles.avatar}
-          source={require('../assets/icons/SuBeeTeam.png')}
-        />
-      </View>
-      <View style={styles.body}>
-        <ScrollView>
-          <Text text="Thông tin khách hàng" size={20} fontFamily="bold" />
-          <InfoRow
-            image={require('../assets/icons/ic_man.png')}
-            title="Họ tên"
-            text={user.user.name}
-          />
-          <InfoRow
-            image={require('../assets/icons/ic_phone.png')}
-            title="Số điện thoại"
-            text={user.user.phonenumber}
-          />
-          <InfoRow
-            image={require('../assets/icons/ic_email.png')}
-            title="Email"
-            text={user.user.email}
-          />
-          <InfoRow
-            image={require('../assets/icons/ic_map.png')}
-            title="Địa chỉ"
-            text={user.user.address}
-          />
-          <InfoRow
+        <View style={styles.body}>
+          <ScrollView style={{flex: 1, paddingTop: 10}}>
+            <Text text="Thông tin khách hàng" size={18} fontFamily="bold" />
+            <InfoRow
+              image={require('../assets/icons/ic_man.png')}
+              title="Họ tên"
+              text={user.user.name}
+            />
+            <InfoRow
+              image={require('../assets/icons/ic_phone.png')}
+              title="Số điện thoại"
+              text={user.user.phonenumber}
+            />
+            <InfoRow
+              image={require('../assets/icons/ic_email.png')}
+              title="Email"
+              text={user.user.email}
+            />
+            <InfoRow
+              image={require('../assets/icons/ic_map.png')}
+              title="Địa chỉ"
+              text={user.user.address}
+            />
+            {/* <InfoRow
             image={require('../assets/icons/ic_crown.png')}
             title="Ngày sinh"
             text={user.user.birthday}
-          />
+          /> */}
+          </ScrollView>
           <Pressable
             style={[
               styles.customButton,
@@ -96,16 +105,17 @@ export default function ProfileScreen() {
             <Text
               text="Cập nhật thông tin"
               color={settingApp.settingApp.colorText}
-              size={18}
+              size={16}
             />
           </Pressable>
           <Pressable
-            style={[styles.customButton, {backgroundColor: colors.grey}]}
+            style={[styles.customButton, {backgroundColor: '#151515'}]}
             onPress={() => logOut()}>
-            <Text text="Đăng xuất" color={colors.black} size={18} />
+            <Text text="Đăng xuất" color={colors.white} size={16} />
           </Pressable>
-        </ScrollView>
+        </View>
       </View>
+
       <Dialog
         contentStyle={styles.dialog}
         visible={dialog}
@@ -125,21 +135,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomLeftRadius: 120,
   },
   body: {
     flex: 3,
     padding: 10,
+    borderTopRightRadius: 120,
+    backgroundColor: 'white',
   },
   customButton: {
     height: 45,
-    borderRadius: 8,
+    borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 12,
   },
   avatar: {
-    height: 130,
-    width: 130,
+    height: 120,
+    width: 120,
   },
   dialog: {
     padding: 0,
