@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import colors from '../config/color';
 
-export default function Title({text, color, fontFamily, size}) {
+export default function Title({text, color, fontFamily, size, marginBottom}) {
   const fontName = {
     bold: 'Roboto-Bold',
     regular: 'Roboto-Regular',
@@ -19,6 +19,7 @@ export default function Title({text, color, fontFamily, size}) {
           fontSize: size || 14,
           marginBottom: 5,
           color: color || colors.black,
+          marginBottom: marginBottom || 0,
         }}>
         {text}
       </Text>

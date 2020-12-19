@@ -41,6 +41,7 @@
     "react-native-safe-area-context": "^3.1.6",
     "react-native-screens": "^2.10.1",
     "react-native-simple-dialogs": "^1.3.0",
+    "react-native-simple-toast": "^1.1.3",
     "react-native-skeleton-placeholder": "^2.0.7",
     "react-native-splash-screen": "^3.2.0",
     "react-native-swiper-flatlist": "^2.0.4",

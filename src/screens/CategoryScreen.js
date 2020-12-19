@@ -82,7 +82,6 @@ export default function CategoryScreen({route}) {
 
   const _loadMore = useCallback(() => {
     if (loadMoreSize <= 40) {
-      console.log(loadMoreSize);
       setLoading(true);
       setLoadMoreSize(loadMoreSize + 5);
     }

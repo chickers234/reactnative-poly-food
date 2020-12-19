@@ -4,6 +4,7 @@ import React, {useContext, useState} from 'react';
 import {Image, Pressable, StyleSheet, TextInput, View} from 'react-native';
 import colors from '../../config/color';
 import {StoreContext} from '../../utils/store';
+import {validateEmail, validatePhone, CustomToast} from '../../utils/helper';
 import Text from '../Text';
 
 export default function ProfileDialog({hideDialog}) {
@@ -14,19 +15,26 @@ export default function ProfileDialog({hideDialog}) {
   const [email, setEmail] = useState(user.user.email);
 
   const updateUser = async () => {
-    const newUser = {
-      address: address,
-      birthday: '',
-      email: email,
-      name: name,
-      phonenumber: phonenumber,
-      token: token.token,
-      uid: auth().currentUser.uid,
-    };
-    user.setUser(newUser);
-    await database().ref(`/User/${auth().currentUser.uid}`).set(newUser);
-    hideDialog();
+    if (name && phonenumber && address && email) {
+      if (validatePhone(phonenumber) && validateEmail(email)) {
+        const newUser = {
+          address: address,
+          birthday: '',
+          email: email,
+          name: name,
+          phonenumber: phonenumber,
+          token: token.token,
+          uid: auth().currentUser.uid,
+        };
+        user.setUser(newUser);
+        await database().ref(`/User/${auth().currentUser.uid}`).set(newUser);
+        hideDialog();
+      }
+    } else {
+      CustomToast('Vui lòng nhập đầy đủ thông tin');
+    }
   };
+
   return (
     <View style={styles.container}>
       <View
@@ -47,11 +55,24 @@ export default function ProfileDialog({hideDialog}) {
           value={name}
         />
         <TextInput
+          keyboardType={'numeric'}
           style={styles.input}
           placeholder="Phone Number"
           onChangeText={(text) => setPhonenumber(text)}
           value={phonenumber}
         />
+
+        {phonenumber.length
+          ? !validatePhone(phonenumber) && (
+              <Text
+                text="Số điện thoại không đúng định dạng"
+                color={colors.red}
+                size={14}
+                marginBottom={10}
+              />
+            )
+          : null}
+
         <TextInput
           style={styles.input}
           placeholder="Address"
@@ -64,6 +85,16 @@ export default function ProfileDialog({hideDialog}) {
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
+        {email.length
+          ? !validateEmail(email) && (
+              <Text
+                text="Email không đúng định dạng"
+                color={colors.red}
+                size={14}
+                marginBottom={10}
+              />
+            )
+          : null}
         <View style={styles.line} />
         <Pressable style={styles.customButton} onPress={() => updateUser()}>
           <Text text="Xác nhận" color={colors.white} size={16} />
@@ -108,5 +139,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     marginTop: 20,
+  },
+  warning: {
+    fontFamily: 'Roboto-Light',
+    color: 'red',
+    fontSize: 15,
+    margin: 12,
   },
 });
