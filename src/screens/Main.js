@@ -49,7 +49,7 @@ export default function MainStack() {
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       Alert.alert(
-        'A new FCM message arrived!',
+        'BeeFood thông báo!',
         JSON.stringify(remoteMessage.notification.body),
       );
       console.log(remoteMessage);

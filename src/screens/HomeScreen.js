@@ -1,4 +1,5 @@
 import database from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
 import {getDistance} from 'geolib';
 import React, {useContext, useEffect, useState} from 'react';
 import {
@@ -53,8 +54,17 @@ export default function HomeScreen() {
   const [latitude, setLat] = useState('');
   const [longitude, setLong] = useState('');
   const [data, setData] = useState([]);
-  const {userLoc, userPos} = useContext(StoreContext);
+  const {userLoc, userPos, token} = useContext(StoreContext);
   const numColumns = 4;
+
+  useEffect(() => {
+    database()
+      .ref(`/User/${auth().currentUser.uid}/token`)
+      .set(token.token)
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [token.token]);
 
   useEffect(() => {
     GetLocation.getCurrentPosition({
@@ -128,7 +138,7 @@ export default function HomeScreen() {
       // Stop listening for updates when no longer required
       return () => database().ref('/CuaHang').off('value', onValueChange);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }, [data, latitude, longitude]);
 
