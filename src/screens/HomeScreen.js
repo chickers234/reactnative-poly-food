@@ -197,12 +197,12 @@ export default function HomeScreen() {
       <View style={styles.body}>
         <Text
           style={{
-            fontSize: 18,
-            fontFamily: 'Roboto-Regular',
+            fontSize: 16,
+            fontFamily: 'Roboto-Medium',
             marginBottom: 10,
             color: settingApp.settingApp.backgroundColor,
           }}>
-          Cửa hàng gần bạn
+          CỬA HÀNG GẦN BẠN
         </Text>
         {_renderList()}
       </View>
