@@ -21,7 +21,7 @@ export function sortByDistance(data) {
 }
 
 export function getNow() {
-  return moment().format('llll');
+  return moment().format('YYYY-MM-DD hh:mm:ss');
 }
 
 export function formatMoney(currency) {
