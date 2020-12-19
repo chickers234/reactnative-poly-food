@@ -17,6 +17,20 @@ import HomeScreen from './HomeScreen';
 import NewsScreen from './News/NewsScreen';
 import ProfileScreen from './ProfileScreen';
 const {height, width} = Dimensions.get('window');
+const initData = {
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+  7: 0,
+  8: 0,
+  9: 0,
+  10: 0,
+  11: 0,
+  12: 0,
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -66,7 +80,7 @@ export default function MainStack() {
       database()
         .ref(`/User/${auth().currentUser.uid}`)
         .on('value', (snapshot) => {
-          if (snapshot.val() !== null) {
+          if (snapshot.val() === null) {
             user.setUser(snapshot.val());
           } else {
             createUser();
@@ -78,6 +92,20 @@ export default function MainStack() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    try {
+      database()
+        .ref(`ViewedCount/${year}`)
+        .once('value', (snapshot) => {
+          if (snapshot.val() === null) {
+            database().ref(`ViewedCount/${year}`).set(initData);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [year]);
 
   useEffect(() => {
     const onValueChange = database()
