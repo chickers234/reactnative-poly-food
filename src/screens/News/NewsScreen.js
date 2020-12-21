@@ -1,81 +1,37 @@
-import database from '@react-native-firebase/database';
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Dimensions,
-  FlatList,
-  StyleSheet,
-  View,
-} from 'react-native';
-import NewsItem from '../../components/List/NewsItem';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import React, {useContext} from 'react';
+import {Dimensions, View} from 'react-native';
 import {StoreContext} from '../../utils/store';
+const Tab = createMaterialTopTabNavigator();
 const {width, height} = Dimensions.get('window');
+import PostsScreen from './PostsScreen';
+import DiscountsScreen from './DiscountsScreen';
 
-const NewsScreen = () => {
+export default function ForYou() {
   const {settingApp} = useContext(StoreContext);
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const onValueChange = database()
-      .ref('/News')
-      .on('value', (snapshot) => {
-        let newsList = [];
-        snapshot.forEach((child) => {
-          newsList.push(child.val());
-        });
-        setData(newsList);
-      });
-
-    return () => database().ref('/News').off('value', onValueChange);
-  }, []);
-
-  const _renderItem = ({item}) => (
-    <NewsItem
-      title={item.title}
-      happy={item.happy}
-      picture={item.picture}
-      time={item.time}
-    />
-  );
-
-  if (!data.length) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator
-          size="large"
-          color={settingApp.settingApp.backgroundColor}
-        />
-      </View>
-    );
-  }
 
   return (
-    <View style={styles.container}>
+    <>
       <View
         style={{
           backgroundColor: settingApp.settingApp.backgroundColor,
-          height: 40,
+          height: 35,
         }}
       />
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={(item) => _renderItem(item)}
-      />
-    </View>
+      <Tab.Navigator
+        tabBarOptions={{
+          labelStyle: {
+            fontSize: 13,
+            fontFamily: 'Roboto-Bold',
+            color: settingApp.settingApp.colorText,
+          },
+          indicatorStyle: {backgroundColor: settingApp.settingApp.colorText},
+          tabStyle: {width: width * 0.5},
+          style: {backgroundColor: settingApp.settingApp.backgroundColor},
+        }}>
+        <Tab.Screen name="Tin tức" component={PostsScreen} />
+        <Tab.Screen name="Khuyến mãi" component={DiscountsScreen} />
+      </Tab.Navigator>
+    </>
   );
-};
-
-export default NewsScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  body: {
-    flex: 1,
-    padding: width * 0.01,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+}

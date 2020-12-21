@@ -173,7 +173,7 @@ export default function MainStack() {
         name="Tin tức"
         component={NewsScreen}
         options={{
-          tabBarLabel: 'Tin tức',
+          tabBarLabel: 'Dành cho bạn',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="ios-newspaper" color={color} size={24} />
           ),

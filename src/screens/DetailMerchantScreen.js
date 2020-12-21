@@ -113,20 +113,6 @@ export default function DetailMerchantScreen({route, navigation}) {
         }}>
         <MenuScreen />
       </View>
-
-      {/* <Tab.Navigator
-        tabBarOptions={{
-          labelStyle: {
-            fontSize: 13,
-            fontFamily: 'Roboto-Bold',
-            color: settingApp.settingApp.colorText,
-          },
-          tabStyle: {width: width * 0.5},
-          style: {backgroundColor: settingApp.settingApp.backgroundColor},
-        }}>
-        <Tab.Screen name="Thực đơn" component={MenuScreen} />
-        <Tab.Screen name="Bản đồ" component={MapScreen} />
-      </Tab.Navigator> */}
     </View>
   );
 }
