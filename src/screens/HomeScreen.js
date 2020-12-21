@@ -120,7 +120,7 @@ export default function HomeScreen() {
                 longitude: child.val().longitude,
               },
             );
-            if (dis / 1000 < 5) {
+            if (dis / 1000 < 10) {
               MerchantList.push({
                 id: child.val().macuahang,
                 image: child.val().hinhanh,
