@@ -269,7 +269,7 @@ export default function CartScreen() {
             style={styles.icon}
             source={require('../assets/icons/location.png')}
           />
-          <Text style={common.subtitle}>{userPos.userPos}</Text>
+          <Text style={common.subtitle} numberOfLines={2}>{userPos.userPos}</Text>
         </View>
       </View>
       <View style={[styles.section, {flex: 6}]}>{renderCartView()}</View>
