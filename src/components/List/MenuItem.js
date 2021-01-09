@@ -62,27 +62,29 @@ export default function MenuItem({id, image, name, price}) {
           cartList.setCartList(cartList.cartList.concat(oder));
         }
       } else {
-        Alert.alert(
-          //title
-          'Thông báo',
-          //body
-          'Đặt món ăn trên sẽ xoá giỏ hàng hiện tại. Bạn có muốn tiếp tục?',
-          [
-            {
-              text: 'Xác nhận',
-              onPress: () => {
-                let orders = [];
-                cartList.setCartList(orders.concat(oder));
+        setTimeout(() => {
+          Alert.alert(
+            //title
+            'Thông báo',
+            //body
+            'Đặt món ăn trên sẽ xoá giỏ hàng hiện tại. Bạn có muốn tiếp tục?',
+            [
+              {
+                text: 'Xác nhận',
+                onPress: () => {
+                  let orders = [];
+                  cartList.setCartList(orders.concat(oder));
+                },
               },
-            },
-            {
-              text: 'Huỷ',
-              onPress: () => console.log('Huỷ'),
-              style: 'cancel',
-            },
-          ],
-          {cancelable: true},
-        );
+              {
+                text: 'Huỷ',
+                onPress: () => console.log('Huỷ'),
+                style: 'cancel',
+              },
+            ],
+            {cancelable: true},
+          );
+        }, 500);
       }
     } catch (error) {
       console.log(error);
